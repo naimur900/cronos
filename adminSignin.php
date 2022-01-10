@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
-if (isset($_SESSION["adminName"])) {
+if (isset($_SESSION["admin_name"])) {
   header("location: adminPanel.php");
 }
 ?>
@@ -66,7 +66,7 @@ if (isset($_SESSION["adminName"])) {
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" name="pass" class="form-control" id="exampleInputPassword1" />
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1" />
           </div>
           <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-success">Submit</button>

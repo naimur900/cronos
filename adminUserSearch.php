@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-if (!isset($_SESSION["adminName"])) {
+if (!isset($_SESSION["admin_name"])) {
     header("location: userSignin.php");
 }
 ?>
@@ -43,7 +42,7 @@ if (!isset($_SESSION["adminName"])) {
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-danger" class="nav-link" href="adminSignout.php">Sign Out, <?= $_SESSION['adminName']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="adminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
                         </li>
                     </ul>
                 </div>
@@ -51,7 +50,7 @@ if (!isset($_SESSION["adminName"])) {
         </nav>
     </navbar>
     <!-- Main Tag-->
-    <h6 class="text-center mt-4">Hello, <span class="text-secondary"><?= $_SESSION['adminName']; ?></span></h6>
+    <h6 class="text-center mt-4">Hello, <span class="text-secondary"><?= $_SESSION['admin_name']; ?></span></h6>
     <div class="text-center text-success mb-5"><small>Logged as Admin</small></div>
     <main class="container">
         <div class="text-center mb-4">
@@ -101,11 +100,11 @@ if (!isset($_SESSION["adminName"])) {
                                 <td><?php echo $row[8]; ?> </td>
 
 
-                                <td><button class="btn btn-danger"><a href="deleteBookingFromAdminEnd.php?bookingID=<?php echo $row[0]; ?> & carID=<?php echo $row[5]; ?>">Delete</a></button></button></td>
+                                <td><button class="btn btn-danger"><a href="deleteBookingFromAdminEnd.php?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[5]; ?>">Delete</a></button></button></td>
                             </tr>
                     <?php
                         }
-                    } 
+                    }
                     ?>
                 </tbody>
             </table>
@@ -134,7 +133,7 @@ if (!isset($_SESSION["adminName"])) {
                     $sql = "SELECT * from customer WHERE (customer.first_name = '$searched_name' or customer.last_name = '$searched_name' or (CONCAT(customer.first_name,' ',customer.last_name)) = '$searched_name')";
 
 
-                    //   (SELECT CONCAT(first_name,' ', last_name) AS fullname FROM customer WHERE fullname = '$searched_name';)
+                    //   (SELECT CONCAT(first_name,' ', last_name) AS fullast_name FROM customer WHERE fullast_name = '$searched_name';)
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         //here we will print every row that is returned by our query $sql
@@ -153,8 +152,7 @@ if (!isset($_SESSION["adminName"])) {
                             </tr>
                     <?php
                         }
-                    }
-                    else {
+                    } else {
                         echo "<script>alert('No result found'); window.location.href='adminPanel.php';</script>";
                     }
                     ?>
@@ -213,7 +211,7 @@ if (!isset($_SESSION["adminName"])) {
                                     <td><?php echo $row[12] ?> </td>
 
                                     <td class="carIcon"><a href="<?php echo $row[14] ?>" target="_blank"><img class="img-fluid" src="<?php echo $row[14] ?>" alt=""></a></td>
-                                    <td><button class="btn btn-danger"><a href="deleteCar.php?carID=<?php echo $row[13]; ?>">Delete</a></button></button></td>
+                                    <td><button class="btn btn-danger"><a href="deleteCar.php?car_id=<?php echo $row[13]; ?>">Delete</a></button></button></td>
                                 </tr>
                         <?php
                             }

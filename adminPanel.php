@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["adminName"])) {
+if (!isset($_SESSION["admin_name"])) {
   header("location: userSignin.php");
 }
 ?>
@@ -43,7 +43,7 @@ if (!isset($_SESSION["adminName"])) {
               <a class="nav-link active" aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-danger" class="nav-link" href="adminSignout.php">Sign Out, <?= $_SESSION['adminName']; ?> </a>
+              <a class="btn btn-danger" class="nav-link" href="adminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
             </li>
           </ul>
         </div>
@@ -51,7 +51,7 @@ if (!isset($_SESSION["adminName"])) {
     </nav>
   </navbar>
   <!-- Main Tag-->
-  <h6 class="text-center mt-4">Hello, <span class="text-secondary"><?= $_SESSION['adminName']; ?></span></h6>
+  <h6 class="text-center mt-4">Hello, <span class="text-secondary"><?= $_SESSION['admin_name']; ?></span></h6>
   <div class="text-center text-success mb-5"><small>Logged as Admin</small></div>
 
 
@@ -107,7 +107,7 @@ if (!isset($_SESSION["adminName"])) {
                 <td><?php echo $row[8]; ?> </td>
 
 
-                <td><button class="btn btn-danger"><a href="deleteBookingFromAdminEnd.php?bookingID=<?php echo $row[0]; ?> & carID=<?php echo $row[5]; ?>">Delete</a></button></button></td>
+                <td><button class="btn btn-danger"><a href="deleteBookingFromAdminEnd.php?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[5]; ?>">Delete</a></button></button></td>
               </tr>
           <?php
             }
@@ -220,7 +220,7 @@ if (!isset($_SESSION["adminName"])) {
                   <td><?php echo $row[12] ?> </td>
 
                   <td class="carIcon"><a href="<?php echo $row[14] ?>" target="_blank"><img class="img-fluid" src="<?php echo $row[14] ?>" alt=""></a></td>
-                  <td><button class="btn btn-danger"><a href="deleteCar.php?carID=<?php echo $row[13]; ?>">Delete</a></button></button></td>
+                  <td><button class="btn btn-danger"><a href="deleteCar.php?car_id=<?php echo $row[13]; ?>">Delete</a></button></button></td>
                 </tr>
             <?php
               }

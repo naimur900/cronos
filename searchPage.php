@@ -44,7 +44,7 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                         <li class="nav-item ms-2">
                             <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
@@ -56,7 +56,7 @@ if (!isset($_SESSION["email"])) {
     </navbar>
     <div class="container m-auto">
         <div class="p-2 border mb-3 text-center">
-            <h6>Hello, <span class="text-secondary"> <?= $_SESSION['firstName']; ?> <?= $_SESSION['name']; ?></span> </h6>
+            <h6>Hello, <span class="text-secondary"> <?= $_SESSION['first_name']; ?> <?= $_SESSION['last_name']; ?></span> </h6>
         </div>
         <div class="mt-4 mb-4 text-center">
             <h4>Available Cars</h4>
@@ -71,6 +71,7 @@ if (!isset($_SESSION["email"])) {
                 $sql = "SELECT brand, model, specification.category,specification.mpg, specification.transmission_type, specification.fuel_type, specification.fuel_capacity, specification.horse_power, specification.torque, specification.seat_capacity, specification.boot_space, specification.color, specification.car_id, picture FROM car 
                 INNER JOIN specification on specification.car_id = car.car_id WHERE car.car_status = 'not-booked' AND (brand ='$searched_name' OR model='$searched_name' OR specification.color='$searched_name' OR specification.category='$searched_name' OR (CONCAT(car.brand,' ',car.model)) = '$searched_name' OR (CONCAT(car.model,' ',car.brand)) = '$searched_name' ) ORDER BY car.car_id DESC";
 
+                // Executing the query
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     //here we will print every row that is returned by our query $sql
@@ -99,7 +100,7 @@ if (!isset($_SESSION["email"])) {
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="addBooking.php?carID=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
+                                    <a href="addBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
                                 </div>
                             </div>
                         </div>

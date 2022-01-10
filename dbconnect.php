@@ -1,20 +1,20 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
+$server_name = "localhost";
+$user_name = "root";
 $password = "";
-$dbname = "showroom_database";
+$db_name = "showroom_database";
 
 //creating connection
 
-$conn = new mysqli($servername, $username, $password);
+$conn = new mysqli($server_name, $user_name, $password);
 
 //check connection 
 if($conn->connect_error){
 	die("Connection failed: " . $conn->connect_error);
 	}
 else{
-	mysqli_select_db($conn, $dbname);
+	mysqli_select_db($conn, $db_name);
 	//echo "Connection successful";
 	}
 

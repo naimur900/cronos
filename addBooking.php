@@ -3,18 +3,17 @@ session_start();
 
 require_once('dbConnect.php'); // Using database connection file here
 
-$carId = $_GET['carID']; // get id through query string
-$cusID = $_SESSION['cusID'];
-$sqlForUpdatingStatus = "UPDATE car SET car_status = 'booked' WHERE car.car_id = '$carId'";
-$sqlForBooking = "INSERT INTO booking VALUES( default, default, '$cusID', '$carId' )";
-$resultBooking1 = mysqli_query($conn, $sqlForUpdatingStatus);
-$resultBooking2 = mysqli_query($conn, $sqlForBooking);
+$car_id = $_GET['car_id']; // get car_id through query string
+$customer_id = $_SESSION['customer_id'];
+$query_updating_status = "UPDATE car SET car_status = 'booked' WHERE car.car_id = '$car_id'";
+$query_inserting_booking = "INSERT INTO booking VALUES( default, default, '$customer_id', '$car_id' )";
+$result1 = mysqli_query($conn, $query_updating_status);
+$result2 = mysqli_query($conn, $query_inserting_booking);
 
-
-if (mysqli_affected_rows($conn) == 0){
-    echo "<script>alert('Booking Failed'); window.location.href='userpanel.php';</script>";
-}
-else if(mysqli_affected_rows($conn) > 0) {
+if ($result1 & $result2){
     echo "<script>alert('Booking Successful'); window.location.href='userpanel.php';</script>";
+}
+else{
+    echo "<script>alert('Booking Failed'); window.location.href='userpanel.php';</script>";
 }
     

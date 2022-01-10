@@ -3,19 +3,19 @@
 require_once('dbConnect.php');
 
 // we need to check if the input in the form textfields are not empty
-if(isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['city']) && isset($_POST['address']) && isset($_POST['phone_number']) && isset($_POST['email']) && isset($_POST['pass'])){
+if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['city']) && isset($_POST['address']) && isset($_POST['phone_number']) && isset($_POST['email']) && isset($_POST['password'])){
 	// write the query to check if this username and password exists in our database
-	$fn = $_POST['fname'];
-	$ln = $_POST['lname'];
+	$fn = $_POST['first_name'];
+	$ln = $_POST['last_name'];
 	$c = $_POST['city'];
 	$ad = $_POST['address'];
 	$pn = $_POST['phone_number'];
 	$em = $_POST['email'];
-	$ps = $_POST['pass'];
-	$sql = " INSERT INTO  customer VALUES( Default,'$fn', '$ln', '$c', '$ad', '$pn', '$em','$ps' )";
+	$ps = $_POST['password'];
+	$query_inserting_customer = " INSERT INTO  customer VALUES( Default,'$fn', '$ln', '$c', '$ad', '$pn', '$em','$ps' )";
 	
 	//Execute the query 
-	$result = mysqli_query($conn, $sql);
+	$result = mysqli_query($conn, $query_inserting_customer);
 	
 	//check if this insertion is happening in the database
 	if(mysqli_affected_rows($conn)){

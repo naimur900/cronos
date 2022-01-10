@@ -49,7 +49,7 @@
 
     require_once('dbConnect.php'); // Using database connection file here
 
-    $cusID = $_SESSION['cusID'];
+    $customer_id = $_SESSION['customer_id'];
     ?>
 
     <main class="container">
@@ -78,7 +78,7 @@
                     $sql = "SELECT order_id, order_time, car.car_id, customer.customer_id, 
                     customer.first_name ,car.model, car.brand, car.price FROM booking 
                     INNER JOIN customer on customer.customer_id = booking.customer_id 
-                    INNER JOIN car on car.car_id = booking.car_id WHERE booking.customer_id='$cusID' ORDER BY order_id DESC;";
+                    INNER JOIN car on car.car_id = booking.car_id WHERE booking.customer_id='$customer_id' ORDER BY order_id DESC;";
 
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
@@ -96,7 +96,7 @@
                                 <td><?php echo $row[6] ?> </td>
                                 <td><?php echo $row[7] ?> </td>
                                 <td><button class="btn btn-danger"><a href="deleteBookingFromUserEnd.php
-                                ?bookingID=<?php echo $row[0]; ?> & carID=<?php echo $row[2]; ?>">Delete</a></button></button></td>
+                                ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td>
                             </tr>
                     <?php
                         }

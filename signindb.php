@@ -4,33 +4,32 @@
 	require_once('dbConnect.php');
 
 	// we need to check if the input in the form textfields are not empty
-	if (isset($_POST['email']) && isset($_POST['pass'])) {
+	if (isset($_POST['email']) && isset($_POST['password'])) {
 		// write the query to check if this username and password exists in our database
 		$email = $_POST['email'];
-		$pass = $_POST['pass'];
-		$sql = "SELECT * FROM customer WHERE email = '$email' AND password = '$pass'";
+		$password = $_POST['password'];
+		$query = "SELECT * FROM customer WHERE email = '$email' AND password = '$password'";
 		//Execute the quer
-		$result = mysqli_query($conn, $sql);
-		$numrows = mysqli_num_rows($result);
+		$result = mysqli_query($conn, $query);
 
 		//check if it returns an empty set
 
-		if ($numrows != 0) {
+		if (mysqli_num_rows($result) != 0) {
 			while ($row = mysqli_fetch_assoc($result)) {
-				$dbuseremail = $row['email'];
-				$dbpass = $row['password'];
-				$dbusername = $row['last_name'];
-				$dbCusID = $row['customer_id'];
-				$dbfirstName = $row['first_name'];
+				$db_user_email = $row['email'];
+				$db_password = $row['password'];
+				$db_user_last_name = $row['last_name'];
+				$db_customer_id = $row['customer_id'];
+				$db_user_first_name = $row['first_name'];
 			}
 
 
-			if ($email == $dbuseremail && $pass == $dbpass) {
+			if ($email == $db_user_email && $password == $db_password) {
 
-				$_SESSION['name'] = $dbusername;
-				$_SESSION['email'] = $dbuseremail;
-				$_SESSION['cusID'] = $dbCusID;
-				$_SESSION['firstName'] = $dbfirstName;
+				$_SESSION['last_name'] = $db_user_last_name;
+				$_SESSION['email'] = $db_user_email;
+				$_SESSION['customer_id'] = $db_customer_id;
+				$_SESSION['first_name'] = $db_user_first_name;
 
 				/* Redirect browser */
 				header("Location: userPanel.php");

@@ -44,15 +44,15 @@ session_start();
                 <li class="nav-item">
                   <a class="nav-link" href="userSignin.php"><?php
                                                             if (isset($_SESSION["email"])) {
-                                                              echo "User: ", $_SESSION["firstName"], " ", $_SESSION["name"];
+                                                              echo "User: ", $_SESSION["first_name"], " ", $_SESSION["last_name"];
                                                             } else {
                                                               echo "Sign In";
                                                             } ?></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="adminSignin.php"><?php
-                                                              if (isset($_SESSION["adminName"])) {
-                                                                echo "Admin: ", $_SESSION["adminName"];
+                                                              if (isset($_SESSION["admin_name"])) {
+                                                                echo "Admin: ", $_SESSION["admin_name"];
                                                               } else {
                                                                 echo "Admin Sign In";
                                                               } ?>
@@ -102,8 +102,7 @@ session_start();
               <div class="text-center">
                 <h2>Explore our lineup</h2>
                 <p>
-                  Stylish sedans, capable SUVs and rugged Highlanders - there are every vehicle that’s ready for whatever you’re up to. Check out our lineup to find the right fit for your lifestyle.
-                  Your satisfaction is our pride
+                  Stylish sedans, capable SUVs and rugged Highlanders - you decide, we provide. Any car fitting your lifestyle. <i> <b>Your satisfaction is our pride.</b> </i>
                 </p>
               </div>
             </div>
@@ -127,7 +126,7 @@ session_start();
                 <p>
                   <!-- Peace of mind comes standard when every new comes with CronosCare. -->
                   With every new purchase feel an absolute sense of security from CronosCare.
-                  World class service is guranteed.
+                  World class service guranteed.
                 </p>
               </div>
             </div>

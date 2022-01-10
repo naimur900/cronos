@@ -23,28 +23,19 @@ if(isset($_POST['cn']) && isset($_POST['md']) && isset($_POST['br']) && isset($_
 	$cl = $_POST['cl'];
 	$th = $_POST['th'];
 
-
-	$sqlForCar = " INSERT INTO car VALUES( Default, '$cn', '$cid', '$md', '$br', '$yr', '$pr', '$th' ) ";
-	$sqlForSpecification = " INSERT INTO specification VALUES( Default,'$ct', '$mpg', '$tt', '$ft', '$fc', '$hp','$tr','$sc','$bs','$cl','$cid' ) ";
-
+	$query_inserting_car = " INSERT INTO car VALUES( Default, '$cn', '$cid', '$md', '$br', '$yr', '$pr', '$th' ) ";
+	$query_inserting_specification = " INSERT INTO specification VALUES( Default,'$ct', '$mpg', '$tt', '$ft', '$fc', '$hp','$tr','$sc','$bs','$cl','$cid' ) ";
 	
 	//Execute the query 
-	$resultForCar = mysqli_query($conn, $sqlForCar);
-
+	$result1 = mysqli_query($conn, $query_inserting_car);
+	$result2 = mysqli_query($conn, $query_inserting_specification);
 	
 	//check if this insertion is happening in the database
-	if(mysqli_affected_rows($conn)>0){
-		//Execute the query 
-		$resultForSpecification = mysqli_query($conn, $sqlForSpecification);
-
-		if(mysqli_affected_rows($conn)){
+	if($result1 & $result2){
 			echo "<script>alert('Car Added Successfully'); window.location.href='adminPanel.php';</script>";
-		}
 	}
-	
 	else{
 		echo "<script>alert('Car addition Failed, must insert unique car id and chessis number'); window.location.href='adminPanel.php';</script>";
-
 	}
 	
 }

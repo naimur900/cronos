@@ -1,14 +1,11 @@
 <?php
 require_once('dbConnect.php'); // Using database connection file here
-$idForCar = $_GET['carID']; // get id through query string
-$sqlForCarDeletion = "DELETE FROM car WHERE car_id = '$idForCar'";
-$resultBooking = mysqli_query($conn, $sqlForCarDeletion);
-if($resultBooking)
+$car_id = $_GET['car_id']; // get id through query string
+$query_deleting_car = "DELETE FROM car WHERE car_id = '$car_id'";
+$result = mysqli_query($conn, $query_deleting_car);
+if($result)
 {
-    // mysqli_close($conn); // Close connection
     header("location:adminPanel.php"); // redirects to all records page
-    // exit;	
-    // echo $id;
 }
 else
 {

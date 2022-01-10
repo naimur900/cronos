@@ -5,10 +5,10 @@
 	require_once('dbConnect.php');
 
 	// we need to check if the input in the form textfields are not empty
-	if (isset($_POST['admin_name']) && isset($_POST['pass'])) {
+	if (isset($_POST['admin_name']) && isset($_POST['password'])) {
 		// write the query to check if this username and password exists in our database
 		$u = $_POST['admin_name'];
-		$p = $_POST['pass'];
+		$p = $_POST['password'];
 		$sql = "SELECT * FROM admin WHERE admin_name = '$u' AND password = '$p'";
 
 		//Execute the query 
@@ -16,26 +16,23 @@
 
 		$numrows = mysqli_num_rows($result);
 
-
 		//check if it returns an empty set
 		if ($numrows != 0) {
 			while ($row = mysqli_fetch_assoc($result)) {
-				$dbAdminName = $row['admin_name'];
-				$dbAdminPass = $row['password'];
+				$db_admin_name = $row['admin_name'];
+				$db_admin_password = $row['password'];
 			}
 
+			if ($u == $db_admin_name && $p == $db_admin_password) {
 
-			if ($u == $dbAdminName && $p == $dbAdminPass) {
-
-				$_SESSION['adminName'] = $dbAdminName;
-				/* Redirect browser */
+				$_SESSION['admin_name'] = $db_admin_name;
 				header("Location: adminPanel.php");
 			}
-		} else {
+		} 
+		else {
 		
 			require_once "adminSignin.php";
 			echo "<p class='text-center'>Wrong Password</p> ";
 
 		}
 	}
-	?> 

@@ -49,14 +49,14 @@
         <form action="signupdb.php" method="post">
           <!-- input started -->
           <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            <input type="text" name='fname' class="form-control" id="firstName" aria-describedby="emailHelp" />
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="text" name='first_name' class="form-control" id="firstName" aria-describedby="emailHelp" />
           </div>
           <!-- input finished -->
           <!-- input started -->
           <div class="mb-3">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" name='lname' class="form-control" id="lastName" aria-describedby="emailHelp" />
+            <input type="text" name='last_name' class="form-control" id="lastName" aria-describedby="emailHelp" />
           </div>
           <!-- input finished -->
           <!-- input started -->
@@ -86,7 +86,7 @@
 
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" name='pass' class="form-control" id="exampleInputPassword1" />
+            <input type="password" name='password' class="form-control" id="exampleInputPassword1" />
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

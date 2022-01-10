@@ -43,7 +43,7 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                         <li class="nav-item ms-2">
                             <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
@@ -55,23 +55,12 @@ if (!isset($_SESSION["email"])) {
     </navbar>
     <div class="container m-auto">
         <div class="p-2 border mb-3 text-center">
-            <h6>Hello, <span class="text-secondary"> <?= $_SESSION['firstName']; ?> <?= $_SESSION['name']; ?></span> </h6>
+            <h6>Hello, <span class="text-secondary"> <?= $_SESSION['first_name']; ?> <?= $_SESSION['last_name']; ?></span> </h6>
         </div>
         <div class="mt-4 mb-4 text-center">
             <h4>Available Cars</h4>
         </div>
 
-
-        <!-- <form action="filterPrice.php" class="form-inline md-form mr-auto mb-4">
-            <label for="price">Choose price range:</label>
-            <select id="cars" name="filter_price">
-                <option value="2500000"><=25,00,000</option>
-                <option value="2600000">>25,00,000 </option>
-                <option value="5000000">>=50,00,000</option>
-                <option value="1000000">>=1,00,00,000</option>
-            </select>
-            <input type="submit">
-        </form> -->
 
         <form action="searchPage.php" class="form-inline md-form mr-auto mb-4">
             <input class="form-control mr-sm-2" name='searched_name' type="text" placeholder="Search by brand/model/color/category" aria-label="Search">
@@ -113,7 +102,7 @@ if (!isset($_SESSION["email"])) {
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="addBooking.php?carID=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
+                                    <a href="addBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
                                 </div>
                             </div>
                         </div>
