@@ -119,8 +119,8 @@ if (!isset($_SESSION["admin_name"])) {
       <!-- User Informations -->
       <div class="text-center mt-5 mb-4">
         <h3>Users Information</h3>
-
       </div>
+
       <table class="table">
         <thead class="table-dark">
           <tr>
@@ -358,6 +358,65 @@ if (!isset($_SESSION["admin_name"])) {
             </form>
           </div>
         </div>
+
+        <div class="text-center mt-5 mb-4">
+          <h3>Feedback</h3>
+        </div>
+
+        <div>
+          <div class="row container">
+            <?php
+            require_once("dbConnect.php");
+            $sql = "SELECT feedback_id, feedback_date, feedback_title, feedback_message, customer.customer_id, customer.first_name, customer.last_name, customer.email FROM feedback INNER JOIN customer on feedback.customer_id = customer.customer_id ORDER BY feedback_date DESC";
+
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+              //here we will print every row that is returned by our query $sql
+              while ($row = mysqli_fetch_array($result)) {
+                //here we have to write some HTML code, so we will close php tag
+            ?>
+
+                <div class="col-md-4 mb-5">
+                  <div class="card bookingCard" style="width: 22rem;">
+                    <div class="feedback-title">
+                      <h5 class="card-title"><?php echo $row[2]; ?></h5>
+                    </div>
+                    <div class="card-body">
+                      <div>
+                        <div class="row">
+                          <p>Message: <?php echo $row[3] ?></p>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12"><small>Submitted by: <?php echo $row[5] ?><?php echo $row[6] ?> </small> <br>
+                            <small>Submitted on: <?php echo $row[1] ?></small><br>
+                          </div>
+                          <!-- <div class="col-md-6"> <small>Horse Power: <?php echo $row[7] ?> </small><br>
+                            <small>Torque: <?php echo $row[8] ?> </small><br>
+                            <small>Seat Capacity: <?php echo $row[9] ?> </small><br>
+                            <small>Boot Space: <?php echo $row[10] ?> </small><br>
+                            <small>Color: <?php echo $row[11] ?> </small><br>
+                          </div> -->
+                        </div>
+                      </div>
+                      <!-- <div class="row">
+                        <div class="col-md-6">
+                          <a href="addBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
+                        </div>
+                        <div class="col-md-6">
+                          <a href="addCarsToWishList.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+            <?php
+              }
+            }
+            ?>
+          </div>
+        </div>
+
+
       </div>
   </main>
 

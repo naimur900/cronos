@@ -39,22 +39,16 @@ if (!isset($_SESSION["email"])) {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <!-- Starting, ending -->
-                        <li class="nav-item mx-2">
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="userPanel.php">Car Rental</a>
                         </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
-                        </li>
-                        <li class="nav-item mx-2">
+                        <li class="nav-item">
                             <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
-                        <li class="nav-item ms-2 mx-2">
+                        <li class="nav-item ms-2">
                             <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
                         </li>
                     </ul>
@@ -67,12 +61,12 @@ if (!isset($_SESSION["email"])) {
             <h6>Hello, <span class="text-secondary"> <?= $_SESSION['first_name']; ?> <?= $_SESSION['last_name']; ?></span> </h6>
         </div>
         <div class="mt-4 mb-4 text-center">
-            <h4>Available Cars</h4>
+            <h4>Available Parts</h4>
         </div>
 
 
         <form action="searchPage.php" class="form-inline md-form mr-auto mb-4">
-            <input class="form-control mr-sm-2" name='searched_name' type="text" onkeyup="search_item()" id="given-input" placeholder="Search by brand/model/color/category" aria-label="Search">
+            <input class="form-control mr-sm-2" name='searched_name' type="text" placeholder="Search by brand/model/color/category" aria-label="Search">
             <button class="btn btn-outline-warning mt-2  btn-rounded btn-sm my-0" type="submit">Search</button>
         </form>
         <hr class="mb-4">
@@ -80,8 +74,7 @@ if (!isset($_SESSION["email"])) {
             <div class="row container">
                 <?php
                 require_once("dbConnect.php");
-                $sql = "SELECT brand, model, specification.category,specification.mpg, specification.transmission_type, specification.fuel_type, specification.fuel_capacity, specification.horse_power, specification.torque, specification.seat_capacity, specification.boot_space, specification.color, specification.car_id, picture FROM car 
-                INNER JOIN specification on specification.car_id = car.car_id WHERE car.car_status = 'not-booked' ORDER BY car.car_id DESC";
+                $sql = "SELECT category, brand, model, color, compitable_with, price, image, parts_id FROM parts ORDER BY parts_id DESC";
 
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
@@ -92,31 +85,24 @@ if (!isset($_SESSION["email"])) {
 
                         <div class="col-md-4 mb-5">
                             <div class="card bookingCard" style="width: 22rem;">
-                                <img src="<?php echo $row[13] ?>" class="card-img-top" alt="...">
+                                <img src="<?php echo $row[6] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $row[0]; ?> <?php echo $row[1]; ?></h5>
+                                    <h5 class="card-title"><?php echo $row[1]; ?> <?php echo $row[2]; ?></h5>
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-6"><small>Category: <?php echo $row[2] ?> </small> <br>
-                                                <small>MPG: <?php echo $row[3] ?></small><br>
-                                                <small>Transmission Type: <?php echo $row[4] ?> </small><br>
-                                                <small>Fuel Type: <?php echo $row[5] ?></small><br>
-                                                <small>Fuel Capacity: <?php echo $row[6] ?> </small><br>
-                                            </div>
-                                            <div class="col-md-6"> <small>Horse Power: <?php echo $row[7] ?> </small><br>
-                                                <small>Torque: <?php echo $row[8] ?> </small><br>
-                                                <small>Seat Capacity: <?php echo $row[9] ?> </small><br>
-                                                <small>Boot Space: <?php echo $row[10] ?> </small><br>
-                                                <small>Color: <?php echo $row[11] ?> </small><br>
+                                            <div class="col-md-12"><small>Category: <?php echo $row[0] ?> </small> <br>
+                                                <small>Color: <?php echo $row[3] ?> </small><br>
+                                                <small>Compitable With: <?php echo $row[4] ?> </small><br>
+                                                <small>Price: <?php echo $row[5] ?> </small><br>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="addBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
+                                            <a href="partsPurchase.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-primary">Purchase</a>
                                         </div>
                                         <div class="col-md-6">
-                                            <a href="addCarsToWishList.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
+                                            <a href="addPartsToWishList.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
                                         </div>
                                     </div>
                                 </div>
@@ -130,7 +116,6 @@ if (!isset($_SESSION["email"])) {
         </div>
 
     </div>
-    <script src="js/search.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 

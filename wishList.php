@@ -53,31 +53,29 @@
     ?>
 
     <main class="container">
-        <div class="text-center">
-            <h2>Bookings</h2>
-        </div>
-        <div>
+
+        <div class="mb-5">
+            <div class="text-center mb-4">
+                <h2>Car you wished for</h2>
+            </div>
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">Order ID</th>
-                        <th scope="col">Order Time</th>
-                        <th scope="col">Car ID</th>
+                        <th scope="col">Wished on</th>
                         <th scope="col">Customer ID</th>
-                        <th scope="col">First Name</th>
+                        <th scope="col">Car ID</th>
                         <th scope="col">Model</th>
                         <th scope="col">Brand</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Delete Booking</th>
+                        <th scope="col">Remove Wish</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     require_once("dbConnect.php");
-                    $sql = "SELECT order_id, order_time, car.car_id, customer.customer_id, 
-                    customer.first_name ,car.model, car.brand, car.price FROM booking 
-                    INNER JOIN customer on customer.customer_id = booking.customer_id 
-                    INNER JOIN car on car.car_id = booking.car_id WHERE booking.customer_id='$customer_id' ORDER BY order_id DESC;";
+                    $sql = "SELECT wish_date, customer.customer_id, car.car_id, car.model, car.brand, car.price FROM wishlist
+                    INNER JOIN customer on customer.customer_id = wishlist.customer_id 
+                    INNER JOIN car on car.car_id = wishlist.car_id WHERE wishlist.customer_id='$customer_id' ORDER BY wish_id DESC;";
 
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
@@ -92,8 +90,6 @@
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?> </td>
                                 <td><?php echo $row[5] ?></td>
-                                <td><?php echo $row[6] ?> </td>
-                                <td><?php echo $row[7] ?> </td>
                                 <td><button class="btn btn-danger"><a href="deleteBookingFromUserEnd.php
                                 ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td>
                             </tr>
@@ -107,32 +103,28 @@
 
 
 
-        <div>
-            <div class="text-center">
-                <h2>Cart</h2>
+        <div class="mt-5">
+            <div class="text-center mb-4">
+                <h2>Parts you wished for</h2>
             </div>
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">Purchase ID</th>
-                        <th scope="col">Purchase Time</th>
-                        <th scope="col">Parts ID</th>
+                        <th scope="col">Wished on</th>
                         <th scope="col">Customer ID</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Category</th>
+                        <th scope="col">Parts ID</th>
                         <th scope="col">Model</th>
                         <th scope="col">Brand</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Purchase</th>
+                        <th scope="col">Remove Wish</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     require_once("dbConnect.php");
-                    $sql = "SELECT purchase_id, purchase_time, parts.parts_id, customer.customer_id, 
-                    customer.first_name ,parts.category, parts.model, parts.brand, parts.price FROM purchase
-                    INNER JOIN customer on customer.customer_id = purchase.customer_id 
-                    INNER JOIN parts on parts.parts_id = purchase.purchase_id WHERE purchase.customer_id='$customer_id' ORDER BY purchase_id DESC;";
+                    $sql = "SELECT wish_date, customer.customer_id, parts.parts_id, parts.model, parts.brand, parts.price FROM wishlist
+                    INNER JOIN customer on customer.customer_id = wishlist.customer_id 
+                    INNER JOIN parts on parts.parts_id = wishlist.parts_id WHERE wishlist.customer_id='$customer_id' ORDER BY wish_id DESC;";
 
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
@@ -147,10 +139,7 @@
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?> </td>
                                 <td><?php echo $row[5] ?></td>
-                                <td><?php echo $row[6] ?> </td>
-                                <td><?php echo $row[7] ?> </td>
-                                <td><?php echo $row[8] ?> </td>
-                                <td><button class="btn btn-success"><a href="deleteBookingFromUserEnd.php
+                                <td><button class="btn btn-danger"><a href="deleteBookingFromUserEnd.php
                                 ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td>
                             </tr>
                     <?php
