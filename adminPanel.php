@@ -360,7 +360,7 @@ if (!isset($_SESSION["admin_name"])) {
         </div>
 
         <div class="text-center mt-5 mb-4">
-          <h3>Feedback</h3>
+          <h3>Feedbacks</h3>
         </div>
 
         <div>
@@ -378,17 +378,18 @@ if (!isset($_SESSION["admin_name"])) {
 
                 <div class="col-md-4 mb-5">
                   <div class="card bookingCard" style="width: 22rem;">
-                    <div class="feedback-title">
-                      <h5 class="card-title"><?php echo $row[2]; ?></h5>
-                    </div>
-                    <div class="card-body">
+                    <div class="card-body p-5">
+                      <div class="feedback-title">
+                        <h5 class="card-title"><?php echo $row[2]; ?></h5>
+                      </div>
                       <div>
                         <div class="row">
-                          <p>Message: <?php echo $row[3] ?></p>
+                          <q><i><?php echo $row[3] ?></i></q>
                         </div>
+                        <hr>
                         <div class="row">
-                          <div class="col-md-12"><small>Submitted by: <?php echo $row[5] ?><?php echo $row[6] ?> </small> <br>
-                            <small>Submitted on: <?php echo $row[1] ?></small><br>
+                          <div class="col-md-12"><small><?php echo $row[5] ?><?php echo $row[6] ?> </small> <br>
+                            <small><?php echo $row[1] ?></small><br>
                           </div>
                           <!-- <div class="col-md-6"> <small>Horse Power: <?php echo $row[7] ?> </small><br>
                             <small>Torque: <?php echo $row[8] ?> </small><br>
@@ -398,14 +399,7 @@ if (!isset($_SESSION["admin_name"])) {
                           </div> -->
                         </div>
                       </div>
-                      <!-- <div class="row">
-                        <div class="col-md-6">
-                          <a href="addBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
-                        </div>
-                        <div class="col-md-6">
-                          <a href="addCarsToWishList.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
-                        </div>
-                      </div> -->
+
                     </div>
                   </div>
                 </div>

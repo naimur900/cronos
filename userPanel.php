@@ -52,6 +52,9 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
                         </li>
                         <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="cart.php">Cart</a>
+                        </li>
+                        <li class="nav-item mx-2">
                             <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                         <li class="nav-item ms-2 mx-2">
@@ -91,7 +94,7 @@ if (!isset($_SESSION["email"])) {
                 ?>
 
                         <div class="col-md-4 mb-5">
-                            <div class="card bookingCard" style="width: 22rem;">
+                            <div class="card bookingCard" style="width: 100%;">
                                 <img src="<?php echo $row[13] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $row[0]; ?> <?php echo $row[1]; ?></h5>
@@ -113,7 +116,7 @@ if (!isset($_SESSION["email"])) {
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="addBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
+                                            <a href="carBookingPage.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book Now</a>
                                         </div>
                                         <div class="col-md-6">
                                             <a href="addCarsToWishList.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
