@@ -43,7 +43,7 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="userPanel.php">User Panel</a>
+                            <a class="nav-link active" href="userPanel.php">Car Rental</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
@@ -52,14 +52,11 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
-                        </li>
-                        <li class="nav-item mx-2">
                             <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
-                        <li class="nav-item ms-2 mx-2">
+                        <!-- <li class="nav-item ms-2 mx-2">
                             <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

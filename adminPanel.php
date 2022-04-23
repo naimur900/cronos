@@ -39,10 +39,16 @@ if (!isset($_SESSION["admin_name"])) {
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <!-- Starting, ending -->
-            <li class="nav-item">
+            <li class="nav-item mx-2">
               <a class="nav-link active" aria-current="page" href="index.php">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mx-2">
+              <a class="nav-link active" aria-current="page" href="addCarPage.php">Add Car</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="nav-link active" aria-current="page" href="adminFeedback.php">FeedBacks</a>
+            </li>
+            <li class="nav-item mx-2">
               <a class="btn btn-danger" class="nav-link" href="adminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
             </li>
           </ul>
@@ -173,7 +179,7 @@ if (!isset($_SESSION["admin_name"])) {
       <hr class="mb-4">
       <div>
 
-        <table class="table">
+        <table class="table mb-5">
           <thead class="table-dark">
             <tr>
               <th scope="col">Brand</th>
@@ -232,183 +238,9 @@ if (!isset($_SESSION["admin_name"])) {
           </tbody>
         </table>
 
-        <!-- Add Cars -->
-        <div class="text-center carAdding mb-5">
-          <h2>Add Car</h2>
-        </div>
-        <div class="m-auto mb-5 d-flex justify-content-center">
-          <div class="card p-5 border-addCar">
-            <form action="addCardb.php" method="post">
-              <div class="row">
-                <div class="col-md-6">
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="cid" class="form-label">Car ID (must be unique)</label>
-                    <input type="text" name='cid' class="form-control" id="cid" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="chassisNumber" class="form-label">Chassis Number (must be unique)</label>
-                    <input type="text" name='cn' class="form-control" id="chassisNumber" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="model" class="form-label">Model</label>
-                    <input type="text" name='md' class="form-control" id="model" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="brand" class="form-label">Brand</label>
-                    <input type="text" name='br' class="form-control" id="brand" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="yearOfRelease" class="form-label">Year of Release</label>
-                    <input type="date" name='yr' class="form-control" id="yearOfRelease" />
-                    <!-- <textarea class="form-control" id="address" rows="2" name='address'></textarea> -->
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="price" class="form-label">Price (taka)</label>
-                    <input type="text" name='pr' class="form-control" id="price" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="category" class="form-label">Category</label>
-                    <input type="text" name='ct' class="form-control" id="category" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="mpg" class="form-label">MPG</label>
-                    <input type="text" name='mpg' class="form-control" id="mpg" />
-                  </div>
-                  <!-- input finished -->
+ 
 
-                </div>
-                <div class="col-md-6">
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="tt" class="form-label">Transmission Type</label>
-                    <input type="text" name='tt' class="form-control" id="transmissionType" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="fuelType" class="form-label">Fuel Type</label>
-                    <input type="text" name='ft' class="form-control" id="fuelType" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="fuelCapacity" class="form-label">Fuel Capacity (litre)</label>
-                    <input type="text" name='fc' class="form-control" id="fuelCapacity" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-
-                  <div class="mb-3">
-                    <label for="horsePower" class="form-label">Horse-Power</label>
-                    <input type="text" name='hp' class="form-control" id="horsePower" />
-                  </div>
-                  <!-- input finished -->
-
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="torque" class="form-label">Torque (nm)</label>
-                    <input type="text" name='tr' class="form-control" id="torque" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="seatCapacity" class="form-label">Seat Capacity</label>
-                    <input type="text" name='sc' class="form-control" id="seatCapacity" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="bootSpace" class="form-label">Boot Space (litre)</label>
-                    <input type="text" name='bs' class="form-control" id="bootSpace" />
-                  </div>
-                  <!-- input finished -->
-                  <!-- input started -->
-                  <div class="mb-3">
-                    <label for="color" class="form-label">Color</label>
-                    <input type="text" name='cl' class="form-control" id="color" />
-                  </div>
-                  <!-- input finished -->
-                </div>
-              </div>
-
-              <!-- input started -->
-              <div class="mb-3">
-                <label for="thumbnail" class="form-label">Thumbnail Link <i class="fas fa-link"></i></label>
-                <input type="text" name='th' class="form-control" id="thumbnail" />
-              </div>
-              <!-- input finished -->
-              <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary w-50">Submit</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="text-center mt-5 mb-4">
-          <h3>Feedbacks</h3>
-        </div>
-
-        <div>
-          <div class="row container">
-            <?php
-            require_once("dbConnect.php");
-            $sql = "SELECT feedback_id, feedback_date, feedback_title, feedback_message, customer.customer_id, customer.first_name, customer.last_name, customer.email FROM feedback INNER JOIN customer on feedback.customer_id = customer.customer_id ORDER BY feedback_date DESC";
-
-            $result = mysqli_query($conn, $sql);
-            if (mysqli_num_rows($result) > 0) {
-              //here we will print every row that is returned by our query $sql
-              while ($row = mysqli_fetch_array($result)) {
-                //here we have to write some HTML code, so we will close php tag
-            ?>
-
-                <div class="col-md-4 mb-5">
-                  <div class="card bookingCard" style="width: 22rem;">
-                    <div class="card-body p-5">
-                      <div class="feedback-title">
-                        <h5 class="card-title"><?php echo $row[2]; ?></h5>
-                      </div>
-                      <div>
-                        <div class="row">
-                          <q><i><?php echo $row[3] ?></i></q>
-                        </div>
-                        <hr>
-                        <div class="row">
-                          <div class="col-md-12"><small><?php echo $row[5] ?><?php echo $row[6] ?> </small> <br>
-                            <small><?php echo $row[1] ?></small><br>
-                          </div>
-                          <!-- <div class="col-md-6"> <small>Horse Power: <?php echo $row[7] ?> </small><br>
-                            <small>Torque: <?php echo $row[8] ?> </small><br>
-                            <small>Seat Capacity: <?php echo $row[9] ?> </small><br>
-                            <small>Boot Space: <?php echo $row[10] ?> </small><br>
-                            <small>Color: <?php echo $row[11] ?> </small><br>
-                          </div> -->
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-            <?php
-              }
-            }
-            ?>
-          </div>
-        </div>
+        
 
 
       </div>

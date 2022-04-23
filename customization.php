@@ -45,12 +45,22 @@ if (!isset($_SESSION["email"])) {
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="userPanel.php">Car Rental</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-primary" class="nav-link" href="cart.php">Cart</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-warning" class="nav-link" href="userPurchaseHistory.php">Purchases</a>
+                        </li>
+                        <li class="nav-item mx-2">
                             <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
-                        <li class="nav-item ms-2">
-                            <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -74,7 +84,7 @@ if (!isset($_SESSION["email"])) {
             <div class="row container">
                 <?php
                 require_once("dbConnect.php");
-                $sql = "SELECT category, brand, model, color, compitable_with, price, image, parts_id FROM parts ORDER BY parts_id DESC";
+                $sql = "SELECT category, brand, model, color, compitable_with, price, image, parts_id FROM parts WHERE purchase_status='not-purchased' ORDER BY parts_id DESC";
 
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
@@ -99,7 +109,7 @@ if (!isset($_SESSION["email"])) {
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="partsPurchase.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-primary">Purchase</a>
+                                            <a href="addPartsToCart.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-primary">Add to cart</a>
                                         </div>
                                         <div class="col-md-6">
                                             <a href="addPartsToWishList.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>

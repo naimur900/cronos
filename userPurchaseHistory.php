@@ -68,56 +68,56 @@ $customer_id = $_SESSION['customer_id'];
     </navbar>
 
 
+
     <div class="container my-5">
         <div class="text-center">
-            <h2>My Cars</h2>
+            <h2>Purchased Items</h2>
         </div>
-        <div>
-            <table class="table my-4">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Order ID</th>
-                        <th scope="col">Order Time</th>
-                        <th scope="col">Car ID</th>
-                        <th scope="col">Customer ID</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Brand</th>
-                        <th scope="col">Total Cost</th>
-                        <!-- <th scope="col">Delete Booking</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    require_once("dbConnect.php");
-                    $sql = "SELECT order_id, order_time, car.car_id, customer.customer_id, 
-                    customer.first_name ,car.model, car.brand, total_price FROM booking 
-                    INNER JOIN customer on customer.customer_id = booking.customer_id 
-                    INNER JOIN car on car.car_id = booking.car_id WHERE booking.customer_id='$customer_id' ORDER BY order_id DESC;";
+        <table class="table my-4">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Purchase ID</th>
+                    <th scope="col">Purchase Time</th>
+                    <th scope="col">Parts ID</th>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                require_once("dbConnect.php");
+                $sql = "SELECT purchase_id, purchase_time, parts.parts_id, customer.customer_id, 
+                    customer.first_name ,parts.category, parts.model, parts.brand, parts.price FROM purchase
+                    INNER JOIN customer on customer.customer_id = purchase.customer_id 
+                    INNER JOIN parts on parts.parts_id = purchase.purchase_id WHERE purchase.customer_id='$customer_id' ORDER BY purchase_id DESC;";
 
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result) > 0) {
-                        //here we will print every row that is returned by our query $sql
-                        while ($row = mysqli_fetch_array($result)) {
-                            //here we have to write some HTML code, so we will close php tag
-                    ?>
-                            <tr>
-                                <td><?php echo $row[0]; ?></td>
-                                <td><?php echo $row[1]; ?></td>
-                                <td><?php echo $row[2] ?> </td>
-                                <td><?php echo $row[3] ?></td>
-                                <td><?php echo $row[4] ?> </td>
-                                <td><?php echo $row[5] ?></td>
-                                <td><?php echo $row[6] ?> </td>
-                                <td><?php echo $row[7] ?> </td>
-                                <!-- <td><button class="btn btn-danger"><a href="deleteBookingFromUserEnd.php
-                                ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td> -->
-                            </tr>
-                    <?php
-                        }
+                $result = mysqli_query($conn, $sql);
+                if (mysqli_num_rows($result) > 0) {
+                    //here we will print every row that is returned by our query $sql
+                    while ($row = mysqli_fetch_array($result)) {
+                        //here we have to write some HTML code, so we will close php tag
+                ?>
+                        <tr>
+                            <td><?php echo $row[0]; ?></td>
+                            <td><?php echo $row[1]; ?></td>
+                            <td><?php echo $row[2] ?> </td>
+                            <td><?php echo $row[3] ?></td>
+                            <td><?php echo $row[4] ?> </td>
+                            <td><?php echo $row[5] ?></td>
+                            <td><?php echo $row[6] ?> </td>
+                            <td><?php echo $row[7] ?> </td>
+                            <td><?php echo $row[8] ?> </td>
+                            <!-- <td><button class="btn btn-success"><a href="deletePuchaseFromUserEnd.php
+                                ?purchase_id=<?php echo $row[0]; ?> & parts_id=<?php echo $row[2]; ?>">Delete</a></button></button></td> -->
+                        </tr>
+                <?php
                     }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+                }
+                ?>
+            </tbody>
+        </table>
     </div>

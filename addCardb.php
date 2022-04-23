@@ -32,10 +32,10 @@ if(isset($_POST['cn']) && isset($_POST['md']) && isset($_POST['br']) && isset($_
 	
 	//check if this insertion is happening in the database
 	if($result1 & $result2){
-			echo "<script>alert('Car Added Successfully'); window.location.href='adminPanel.php';</script>";
+			echo "<script>alert('Car Added Successfully'); window.location.href='addCarPage.php';</script>";
 	}
 	else{
-		echo "<script>alert('Car addition Failed, must insert unique car id and chessis number'); window.location.href='adminPanel.php';</script>";
+		echo "<script>alert('Car addition Failed, must insert unique car id and chessis number'); window.location.href='addCarPage.php';</script>";
 	}
 	
 }

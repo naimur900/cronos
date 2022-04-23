@@ -1,10 +1,10 @@
 <?php
 
 require_once('dbConnect.php'); // Using database connection file here
-$idForBooking = $_GET['booking_id']; // get id through query string
+$booking_id = $_GET['booking_id']; // get id through query string
 $car_id = $_GET['car_id'];
 
-$query_inserting_bookingDeletion = "DELETE FROM booking WHERE order_id = '$idForBooking'";
+$query_inserting_bookingDeletion = "DELETE FROM booking WHERE order_id = '$booking_id'";
 $query_updating_status = "UPDATE car SET car_status = 'not-booked' WHERE car.car_id = '$car_id'";
 
 

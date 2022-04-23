@@ -67,3 +67,8 @@ a:hover {
 .footer-form{
   width: 600px !important;
 }
+
+/* .bookingCard:hover .bookingCard{
+  transform: scale(1.2);
+  transition: transform ease-out 1s;
+  /* opacity: calc(60%); */

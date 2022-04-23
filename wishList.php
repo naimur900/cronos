@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["email"])) {
+    header("location: userSignin.php");
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,11 +41,20 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <!-- Starting, ending -->
-                        <li class="nav-item">
+                        <li class="nav-item mx-2">
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="userPanel.php">User Panel</a>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="userPanel.php">Car Rental</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                     </ul>
                 </div>
@@ -45,14 +64,13 @@
 
 
     <?php
-    session_start();
 
     require_once('dbConnect.php'); // Using database connection file here
 
     $customer_id = $_SESSION['customer_id'];
     ?>
 
-    <main class="container">
+    <main class="container my-5">
 
         <div class="mb-5">
             <div class="text-center mb-4">
@@ -73,7 +91,7 @@
                 <tbody>
                     <?php
                     require_once("dbConnect.php");
-                    $sql = "SELECT wish_date, customer.customer_id, car.car_id, car.model, car.brand, car.price FROM wishlist
+                    $sql = "SELECT wish_date, customer.customer_id, car.car_id, car.model, car.brand, car.price, wish_id FROM wishlist
                     INNER JOIN customer on customer.customer_id = wishlist.customer_id 
                     INNER JOIN car on car.car_id = wishlist.car_id WHERE wishlist.customer_id='$customer_id' ORDER BY wish_id DESC;";
 
@@ -90,8 +108,8 @@
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?> </td>
                                 <td><?php echo $row[5] ?></td>
-                                <td><button class="btn btn-danger"><a href="deleteBookingFromUserEnd.php
-                                ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td>
+                                <td><button class="btn btn-danger"><a href="removeCarFromWishList.php
+                                ?wish_id=<?php echo $row[6]; ?>">Remove</a></button></button></td>
                             </tr>
                     <?php
                         }
@@ -113,6 +131,7 @@
                         <th scope="col">Wished on</th>
                         <th scope="col">Customer ID</th>
                         <th scope="col">Parts ID</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Model</th>
                         <th scope="col">Brand</th>
                         <th scope="col">Price</th>
@@ -122,7 +141,7 @@
                 <tbody>
                     <?php
                     require_once("dbConnect.php");
-                    $sql = "SELECT wish_date, customer.customer_id, parts.parts_id, parts.model, parts.brand, parts.price FROM wishlist
+                    $sql = "SELECT wish_date, customer.customer_id, parts.parts_id, parts.model, parts.brand, parts.price, wish_id , parts.category FROM wishlist
                     INNER JOIN customer on customer.customer_id = wishlist.customer_id 
                     INNER JOIN parts on parts.parts_id = wishlist.parts_id WHERE wishlist.customer_id='$customer_id' ORDER BY wish_id DESC;";
 
@@ -136,11 +155,12 @@
                                 <td><?php echo $row[0]; ?></td>
                                 <td><?php echo $row[1]; ?></td>
                                 <td><?php echo $row[2] ?> </td>
+                                <td><?php echo $row[7] ?> </td>
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?> </td>
                                 <td><?php echo $row[5] ?></td>
-                                <td><button class="btn btn-danger"><a href="deleteBookingFromUserEnd.php
-                                ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td>
+                                <td><button class="btn btn-danger"><a href="removeCarFromWishList.php
+                                ?wish_id=<?php echo $row[6]; ?>">Remove</a></button></button></td>
                             </tr>
                     <?php
                         }

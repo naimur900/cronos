@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+require_once('dbConnect.php'); // Using database connection file here
+
+$customer_id = $_SESSION['customer_id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,105 +42,46 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="userPanel.php">User Panel</a>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
                         </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-warning" class="nav-link" href="userPurchaseHistory.php">Purchases</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
         </nav>
     </navbar>
 
-
-    <?php
-    session_start();
-
-    require_once('dbConnect.php'); // Using database connection file here
-
-    $customer_id = $_SESSION['customer_id'];
-    ?>
-
     <main class="container">
         <div class="text-center">
-            <h2>Bookings</h2>
+            <h2>Cart</h2>
         </div>
         <div>
             <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">Order ID</th>
-                        <th scope="col">Order Time</th>
-                        <th scope="col">Car ID</th>
-                        <th scope="col">Customer ID</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Brand</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Delete Booking</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    require_once("dbConnect.php");
-                    $sql = "SELECT order_id, order_time, car.car_id, customer.customer_id, 
-                    customer.first_name ,car.model, car.brand, car.price FROM booking 
-                    INNER JOIN customer on customer.customer_id = booking.customer_id 
-                    INNER JOIN car on car.car_id = booking.car_id WHERE booking.customer_id='$customer_id' ORDER BY order_id DESC;";
-
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result) > 0) {
-                        //here we will print every row that is returned by our query $sql
-                        while ($row = mysqli_fetch_array($result)) {
-                            //here we have to write some HTML code, so we will close php tag
-                    ?>
-                            <tr>
-                                <td><?php echo $row[0]; ?></td>
-                                <td><?php echo $row[1]; ?></td>
-                                <td><?php echo $row[2] ?> </td>
-                                <td><?php echo $row[3] ?></td>
-                                <td><?php echo $row[4] ?> </td>
-                                <td><?php echo $row[5] ?></td>
-                                <td><?php echo $row[6] ?> </td>
-                                <td><?php echo $row[7] ?> </td>
-                                <td><button class="btn btn-danger"><a href="deleteBookingFromUserEnd.php
-                                ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td>
-                            </tr>
-                    <?php
-                        }
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-
-
-
-        <div>
-            <div class="text-center">
-                <h2>Cart</h2>
-            </div>
-            <table class="table">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Purchase ID</th>
-                        <th scope="col">Purchase Time</th>
                         <th scope="col">Parts ID</th>
-                        <th scope="col">Customer ID</th>
-                        <th scope="col">First Name</th>
                         <th scope="col">Category</th>
                         <th scope="col">Model</th>
                         <th scope="col">Brand</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Purchase</th>
+                        <th scope="col">Remove</th>
+                        <!-- <th scope="col">Purchase</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     require_once("dbConnect.php");
-                    $sql = "SELECT purchase_id, purchase_time, parts.parts_id, customer.customer_id, 
-                    customer.first_name ,parts.category, parts.model, parts.brand, parts.price FROM purchase
-                    INNER JOIN customer on customer.customer_id = purchase.customer_id 
-                    INNER JOIN parts on parts.parts_id = purchase.purchase_id WHERE purchase.customer_id='$customer_id' ORDER BY purchase_id DESC;";
+                    $sql = "SELECT partscart.parts_id, parts.category, parts.model, parts.brand, parts.price, cart_id FROM partscart INNER JOIN parts on parts.parts_id = partscart.parts_id INNER JOIN customer on customer.customer_id = partscart.customer_id WHERE partscart.customer_id='$customer_id' ORDER BY cart_id DESC;";
 
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
@@ -146,12 +95,9 @@
                                 <td><?php echo $row[2] ?> </td>
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?> </td>
-                                <td><?php echo $row[5] ?></td>
-                                <td><?php echo $row[6] ?> </td>
-                                <td><?php echo $row[7] ?> </td>
-                                <td><?php echo $row[8] ?> </td>
-                                <td><button class="btn btn-success"><a href="deleteBookingFromUserEnd.php
-                                ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td>
+
+                                <td><button class="btn btn-success"><a href="removePartsFromCart.php
+                                ?cart_id=<?php echo $row[5]; ?>">Remove</a></button></td>
                             </tr>
                     <?php
                         }
@@ -159,4 +105,96 @@
                     ?>
                 </tbody>
             </table>
-        </div>
+
+
+            <div class="d-flex justify-content-center my-5">
+                <button type="button" class="btn btn-success w-25" data-bs-toggle="modal" data-bs-target="#myModal">Purchase</button>
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Payment</h3>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="my-4">
+                                        <h4 class="my-3">Install Parts</h4>
+                                        <label class="col mx-2 my-2">
+                                            <select name='installation_option' style='height:30px;width:170px;border:1px solid #fff;'>
+                                                <option selected="selected" disabled="disabled">Options</option>
+                                                <option value='on_your_own'>On Your Own</option>
+                                                <option value='at_workshop'>At Workshop</option>
+                                            </select>
+                                        </label>
+                                        <label class="col mx-2 my-2">
+                                            <input class="form-control" name='address' type="date" placeholder="Choose a date"></input>
+                                        </label>
+                                    </div>
+                                    <div class="my-4">
+                                        <h4 class="my-3">Billing Details</h4>
+                                        <div class="row my-3">
+                                            <label class="col mx-2 my-2">
+                                                <input class="form-control" name='fname' type="text" placeholder="First Name" />
+                                            </label>
+                                            <label class="col mx-2 my-2">
+                                                <input class="form-control" name='lname' type="text" placeholder="Last Name" />
+                                            </label>
+
+
+                                        </div>
+                                        <div class="row my-3">
+                                            <label class="col mx-2 my-2">
+                                                <input class="form-control w-25" name='zipcode' type="text" placeholder="Zip Code" />
+                                            </label>
+                                        </div>
+                                        <div class="row my-3">
+                                            <label class="col mx-2 my-2">
+                                                <textarea class="form-control" name='address' type="text" placeholder="Address"></textarea>
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="my-4">
+                                        <h4 class="my-3">Credit/Debit detail</h4>
+                                        <div>
+                                            <label class="col mx-2 my-2">
+                                                <input class="form-control" name='card_number' type="text" placeholder="Card Number" />
+                                            </label>
+
+                                            <label class="col mx-2 my-2">
+                                                <select name='card_brand' style='height:30px;width:170px;border:1px solid #fff;'>
+                                                    <option selected="selected" disabled="disabled">Card Brand</option>
+                                                    <option value='Master Card'>Master Card</option>
+                                                    <option value='Visa'>Visa</option>
+                                                    <option value='Discover'>Discover</option>
+                                                    <option value='American Express'>American Express</option>
+                                                </select>
+                                            </label>
+
+                                            <label class="col mx-2 my-2">
+                                                <input class="form-control" name='expiration_date' type="text" placeholder="06/25" />
+                                            </label>
+
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"><a href="confirmPurchase.php">Submit</a></button>
+                                <button type=" submit" class="btn btn-danger">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+
+</div>

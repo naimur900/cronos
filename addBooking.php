@@ -1,19 +1,42 @@
 <?php
+
 session_start();
 
 require_once('dbConnect.php'); // Using database connection file here
 
-$car_id = $_GET['car_id']; // get car_id through query string
 $customer_id = $_SESSION['customer_id'];
+$car_id = $_SESSION['car_id_session']; // get car_id through query string
+$price = $_SESSION['price_session']; // get car_id through query string
+$days = $_GET['days'];
+$pick_area = $_GET['pick_area'];
+$phone_number = $_GET['phone_number'];
+$fname = $_GET['fname'];
+$lname = $_GET['lname'];
+$zipcode = $_GET['zipcode'];
+$address = $_GET['address'];
+$card_number = $_GET['card_number'];
+$card_brand = $_GET['card_brand'];
+$expiration_date = $_GET['expiration_date'];    
+$total_price = floatval($price) * floatval($days);    
+// echo($total_price);                            
+
+
 $query_updating_status = "UPDATE car SET car_status = 'booked' WHERE car.car_id = '$car_id'";
-$query_inserting_booking = "INSERT INTO booking VALUES( default, default, '$customer_id', '$car_id' )";
+$query_inserting_booking = "INSERT INTO booking VALUES( default, default, '$customer_id', '$car_id', '$days', '$address', '$zipcode', '$total_price' )";
 $result1 = mysqli_query($conn, $query_updating_status);
 $result2 = mysqli_query($conn, $query_inserting_booking);
 
-if ($result1 & $result2){
+if ($result1 & $result2) {
     echo "<script>alert('Booking Successful'); window.location.href='userpanel.php';</script>";
-}
-else{
+    unset($_SESSION['car_id_session']);
+    unset($_SESSION['price_session']);
+    unset($car_id);
+    unset($price);
+
+} else {
     echo "<script>alert('Booking Failed'); window.location.href='userpanel.php';</script>";
+    unset($_SESSION['car_id_session']);
+    unset($_SESSION['price_session']);
+    unset($car_id);
+    unset($price);
 }
-    

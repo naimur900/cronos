@@ -51,14 +51,15 @@ if (!isset($_SESSION["email"])) {
                         <li class="nav-item mx-2">
                             <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
                         </li>
+
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="cart.php">Cart</a>
+                            <a class="btn btn-dark" class="nav-link" href="userBooking.php">Bookings</a>
                         </li>
+                        <!-- <li class="nav-item mx-2">
+                            <a class="btn btn-warning" class="nav-link" href="userPurchaseHistory.php">Purchases</a>
+                        </li> -->
                         <li class="nav-item mx-2">
                             <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
-                        </li>
-                        <li class="nav-item ms-2 mx-2">
-                            <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
                         </li>
                     </ul>
                 </div>
@@ -83,7 +84,7 @@ if (!isset($_SESSION["email"])) {
             <div class="row container">
                 <?php
                 require_once("dbConnect.php");
-                $sql = "SELECT brand, model, specification.category,specification.mpg, specification.transmission_type, specification.fuel_type, specification.fuel_capacity, specification.horse_power, specification.torque, specification.seat_capacity, specification.boot_space, specification.color, specification.car_id, picture FROM car 
+                $sql = "SELECT brand, model, specification.category,specification.mpg, specification.transmission_type, specification.fuel_type, specification.fuel_capacity, specification.horse_power, specification.torque, specification.seat_capacity, specification.color, specification.car_id, picture, price FROM car 
                 INNER JOIN specification on specification.car_id = car.car_id WHERE car.car_status = 'not-booked' ORDER BY car.car_id DESC";
 
                 $result = mysqli_query($conn, $sql);
@@ -95,28 +96,36 @@ if (!isset($_SESSION["email"])) {
 
                         <div class="col-md-4 mb-5">
                             <div class="card bookingCard" style="width: 100%;">
-                                <img src="<?php echo $row[13] ?>" class="card-img-top" alt="...">
+                                <img src="<?php echo $row[12] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $row[0]; ?> <?php echo $row[1]; ?></h5>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <h5 class="card-title"><?php echo $row[0]; ?> <?php echo $row[1]; ?></h5>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5><?php echo $row[13] ?>/day</h5>
+                                        </div>
+                                    </div>
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-6"><small>Category: <?php echo $row[2] ?> </small> <br>
+                                            <div class="col-md-6">
+                                                <small>Category: <?php echo $row[2] ?> </small> <br>
                                                 <small>MPG: <?php echo $row[3] ?></small><br>
                                                 <small>Transmission Type: <?php echo $row[4] ?> </small><br>
                                                 <small>Fuel Type: <?php echo $row[5] ?></small><br>
                                                 <small>Fuel Capacity: <?php echo $row[6] ?> </small><br>
                                             </div>
-                                            <div class="col-md-6"> <small>Horse Power: <?php echo $row[7] ?> </small><br>
+                                            <div class="col-md-6">
+                                                <small>Horse Power: <?php echo $row[7] ?> </small><br>
                                                 <small>Torque: <?php echo $row[8] ?> </small><br>
                                                 <small>Seat Capacity: <?php echo $row[9] ?> </small><br>
-                                                <small>Boot Space: <?php echo $row[10] ?> </small><br>
-                                                <small>Color: <?php echo $row[11] ?> </small><br>
+                                                <small>Color: <?php echo $row[10] ?> </small><br>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="carBookingPage.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book Now</a>
+                                            <a href="confirmBookingPage.php?car_id=<?php echo $row['car_id']; ?>& price=<?php echo $row['price']; ?>" class="mt-3 btn btn-primary">Book Now</a>
                                         </div>
                                         <div class="col-md-6">
                                             <a href="addCarsToWishList.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>

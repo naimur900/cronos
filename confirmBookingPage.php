@@ -4,7 +4,6 @@ session_start();
 if (!isset($_SESSION["email"])) {
     header("location: userSignin.php");
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -78,6 +77,10 @@ if (!isset($_SESSION["email"])) {
             <?php
             require_once("dbConnect.php");
             $car_id = $_GET['car_id'];
+            $_SESSION['car_id_session'] = $car_id;
+            // $car_id = $_SESSION['car_id'];
+            $price = $_GET['price'];
+            $_SESSION['price_session'] = $price;
             $sql = "SELECT brand, model, specification.category,specification.mpg, specification.transmission_type, specification.fuel_type, specification.fuel_capacity, specification.horse_power, specification.torque, specification.seat_capacity, specification.boot_space, specification.color, specification.car_id, picture , price FROM car INNER JOIN specification on specification.car_id = car.car_id where car.car_id = '$car_id'";
 
             $result = mysqli_query($conn, $sql);
@@ -89,7 +92,7 @@ if (!isset($_SESSION["email"])) {
                     <div class="d-flex align-items-center">
                         <div class="w-50">
                             <img class="img-fluid" src="<?php echo $row[13] ?>" alt="" srcset="">
-                            <div class="d-flex" id="per-day-price" >
+                            <div class="d-flex" id="per-day-price">
                                 <h4><?php echo $row[14] ?></h4>
                                 <h4>/day</h4>
                             </div>
@@ -109,13 +112,13 @@ if (!isset($_SESSION["email"])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="w-50">
-                            <form id="form" action="" method="post">
+                        <div class="w-50 mb-5">
+                            <form action="addBooking.php" method="get">
                                 <div class="my-4">
                                     <h3 class="my-3">Pick Up detail</h3>
                                     <div class="row">
                                         <label class="col mx-2 my-2">
-                                            <select name='pick' style='height:30px;width:170px;border:1px solid #fff;'>
+                                            <select name='pick_area' style='height:30px;width:170px;border:1px solid #fff;'>
                                                 <option selected="selected" disabled="disabled">Pickup location</option>
                                                 <option value='Banani'>Banani</option>
                                                 <option value='Mohakhali'>Mohakhali</option>
@@ -129,17 +132,19 @@ if (!isset($_SESSION["email"])) {
                                                 // let d = x.options[x.selectedIndex].text;
                                                 console.log(x)
                                                 let y = document.getElementById("per-day-price").getElementsByTagName("h4")[0].innerText;
-                                                let res = eval(x*y)
+                                                let res = eval(x * y)
                                                 console.log(y);
                                                 console.log(res);
                                                 document.getElementById("total").innerText = res;
+                                                // let result = '<%= Session["res"] %>';
+                                                // alert(result);
 
                                             }
                                         </script>
 
 
                                         <label class="col mx-2 my-2 days">
-                                            <select id="days" onchange="getSelectValue()" name='date' style='height:30px;width:170px;border:1px solid #fff;'>
+                                            <select id="days" onchange="getSelectValue()" name='days' style='height:30px;width:170px;border:1px solid #fff;'>
                                                 <option selected="selected" disabled="disabled">Hire for (day):</option>
                                                 <option value='01 '>01</option>
                                                 <option value='02 '>02</option>
@@ -174,7 +179,7 @@ if (!isset($_SESSION["email"])) {
                                             </select>
                                         </label>
                                         <label class="col mx-2 my-2">
-                                            <input name='phone' type="text" placeholder="Phone:" />
+                                            <input class="form-control" name='phone_number' type="text" placeholder="Phone" />
                                         </label>
                                     </div>
 
@@ -182,22 +187,25 @@ if (!isset($_SESSION["email"])) {
 
 
                                 <div class="my-4">
-                                    <h3 class="my-3">Billing Detals</h3>
+                                    <h3 class="my-3">Billing Details</h3>
                                     <div class="row my-3">
                                         <label class="col mx-2 my-2">
-                                            <input name='fname' type="text" placeholder="First" />
+                                            <input class="form-control" name='fname' type="text" placeholder="First Name" />
                                         </label>
                                         <label class="col mx-2 my-2">
-                                            <input name='fmid' type="text" placeholder="Mid" />
+                                            <input class="form-control" name='lname' type="text" placeholder="Last Name" />
                                         </label>
+
+
+                                    </div>
+                                    <div class="row my-3">
                                         <label class="col mx-2 my-2">
-                                            <input name='flast' type="text" placeholder="Last" />
+                                            <input class="form-control w-25" name='zipcode' type="text" placeholder="Zip Code" />
                                         </label>
+                                    </div>
+                                    <div class="row my-3">
                                         <label class="col mx-2 my-2">
-                                            <input name='zipcode' type="text" placeholder="Zip Code" />
-                                        </label>
-                                        <label class="col mx-2 my-2">
-                                            <input name='address' type="text" placeholder="Address" />
+                                            <textarea class="form-control" name='address' type="text" placeholder="Address"></textarea>
                                         </label>
                                     </div>
                                 </div>
@@ -207,11 +215,11 @@ if (!isset($_SESSION["email"])) {
                                     <h3 class="my-3">Credit/Debit detail</h3>
                                     <div>
                                         <label class="col mx-2 my-2">
-                                            <input name='cardno' type="text" placeholder="Card Number" />
+                                            <input class="form-control" name='card_number' type="text" placeholder="Card Number" />
                                         </label>
 
                                         <label class="col mx-2 my-2">
-                                            <select name='brand' style='height:30px;width:170px;border:1px solid #fff;'>
+                                            <select name='card_brand' style='height:30px;width:170px;border:1px solid #fff;'>
                                                 <option selected="selected" disabled="disabled">Card Brand</option>
                                                 <option value='Master Card'>Master Card</option>
                                                 <option value='Visa'>Visa</option>
@@ -221,76 +229,17 @@ if (!isset($_SESSION["email"])) {
                                         </label>
 
                                         <label class="col mx-2 my-2">
-                                            <select name='date' style='height:30px;width:170px;border:1px solid #fff;'>
-                                                <option selected="selected" disabled="disabled">Expiry date</option>
-                                                <option value='01 '>01</option>
-                                                <option value='02 '>02</option>
-                                                <option value='03 '>03</option>
-                                                <option value='05 '>05</option>
-                                                <option value='07 '>07</option>
-                                                <option value='08 '>08</option>
-                                                <option value='09 '>09</option>
-                                                <option value='10 '>10</option>
-                                                <option value='11 '>11</option>
-                                                <option value='12 '>12</option>
-                                                <option value='13 '>13</option>
-                                                <option value='14 '>14</option>
-                                                <option value='15 '>15</option>
-                                                <option value='16 '>16</option>
-                                                <option value='17 '>17</option>
-                                                <option value='18 '>18</option>
-                                                <option value='19 '>19</option>
-                                                <option value='20 '>20</option>
-                                                <option value='21 '>21</option>
-                                                <option value='22 '>22</option>
-                                                <option value='23 '>23</option>
-                                                <option value='24 '>24</option>
-                                                <option value='25 '>25</option>
-                                                <option value='26 '>26</option>
-                                                <option value='27 '>27</option>
-                                                <option value='28 '>28</option>
-                                                <option value='29 '>29</option>
-                                                <option value='30 '>30</option>
-                                                <option value='31 '>31</option>
-                                            </select>
-                                        </label>
-
-                                        <label class="col mx-2 my-2">
-                                            <select name='year' style='height:30px;width:170px;border:1px solid #fff;'>
-                                                <option selected="selected" disabled="disabled">Expiry year</option>
-                                                <option value='2018'>2018</option>
-                                                <option value='2017 '>2017</option>
-                                                <option value='2016 '>2016</option>
-                                                <option value='2015 '>2015</option>
-                                                <option value='2014 '>2014</option>
-                                                <option value='2013 '>2013</option>
-                                                <option value='2012 '>2012</option>
-                                                <option value='2011 '>2011</option>
-                                                <option value='2010 '>2010</option>
-                                            </select>
-                                        </label>
-
-                                        <label class="col mx-2 my-2">
-                                            <select name='month' style='height:30px;width:170px;border:1px solid #fff;'>
-                                                <option selected="selected" disabled="disabled">Expiry Month</option>
-                                                <option value='01 '>01</option>
-                                                <option value='02 '>02</option>
-                                                <option value='03 '>03</option>
-                                                <option value='05 '>05</option>
-                                                <option value='07 '>07</option>
-                                                <option value='08 '>08</option>
-                                                <option value='09 '>09</option>
-                                                <option value='10 '>10</option>
-                                                <option value='11 '>11</option>
-                                                <option value='12 '>12</option>
-                                            </select>
+                                            <input class="form-control" name='expiration_date' type="text" placeholder="06/25" />
                                         </label>
 
 
                                     </div>
                                 </div>
-                                <h3 >Total: <span id="total">0</span> taka</h3>
-                                <button type="submit" value="Sign In" class="btn btn-success">Confirm Booking</button>
+                                <h3>Total: <span id="total">0</span> taka</h3>
+                                <button type="submit" value="Confirm Booking" class="btn btn-success mt-2">
+                                    Confirm Booking
+                                </button>
+
                             </form>
 
                         </div>
