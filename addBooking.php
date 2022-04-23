@@ -9,14 +9,8 @@ $car_id = $_SESSION['car_id_session']; // get car_id through query string
 $price = $_SESSION['price_session']; // get car_id through query string
 $days = $_GET['days'];
 $pick_area = $_GET['pick_area'];
-$phone_number = $_GET['phone_number'];
-$fname = $_GET['fname'];
-$lname = $_GET['lname'];
 $zipcode = $_GET['zipcode'];
 $address = $_GET['address'];
-$card_number = $_GET['card_number'];
-$card_brand = $_GET['card_brand'];
-$expiration_date = $_GET['expiration_date'];    
 $total_price = floatval($price) * floatval($days);    
 // echo($total_price);                            
 

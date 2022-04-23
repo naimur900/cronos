@@ -78,8 +78,8 @@ $customer_id = $_SESSION['customer_id'];
                 <tr>
                     <th scope="col">Purchase ID</th>
                     <th scope="col">Purchase Time</th>
-                    <th scope="col">Parts ID</th>
                     <th scope="col">Customer ID</th>
+                    <th scope="col">Parts ID</th>
                     <th scope="col">First Name</th>
                     <th scope="col">Category</th>
                     <th scope="col">Model</th>
@@ -90,10 +90,10 @@ $customer_id = $_SESSION['customer_id'];
             <tbody>
                 <?php
                 require_once("dbConnect.php");
-                $sql = "SELECT purchase_id, purchase_time, parts.parts_id, customer.customer_id, 
+                $sql = "SELECT purchase_id, purchase_time, purchase.customer_id, purchase.parts_id,
                     customer.first_name ,parts.category, parts.model, parts.brand, parts.price FROM purchase
                     INNER JOIN customer on customer.customer_id = purchase.customer_id 
-                    INNER JOIN parts on parts.parts_id = purchase.purchase_id WHERE purchase.customer_id='$customer_id' ORDER BY purchase_id DESC;";
+                    INNER JOIN parts on parts.parts_id = purchase.parts_id WHERE purchase.customer_id='$customer_id' ORDER BY purchase_id DESC;";
 
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {

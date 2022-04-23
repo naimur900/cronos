@@ -84,7 +84,7 @@ if (!isset($_SESSION["email"])) {
             <div class="row container">
                 <?php
                 require_once("dbConnect.php");
-                $sql = "SELECT category, brand, model, color, compitable_with, price, image, parts_id FROM parts WHERE purchase_status='not-purchased' ORDER BY parts_id DESC";
+                $sql = "SELECT category, brand, model, color, compitable_with, price, image, parts_id FROM parts WHERE parts_status='not-purchased' ORDER BY parts_id DESC";
 
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {

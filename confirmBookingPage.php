@@ -136,8 +136,7 @@ if (!isset($_SESSION["email"])) {
                                                 console.log(y);
                                                 console.log(res);
                                                 document.getElementById("total").innerText = res;
-                                                // let result = '<%= Session["res"] %>';
-                                                // alert(result);
+                                      
 
                                             }
                                         </script>

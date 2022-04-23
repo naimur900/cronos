@@ -43,6 +43,9 @@ $customer_id = $_SESSION['customer_id'];
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                        </li>
+                        <li class="nav-item mx-2">
                             <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
@@ -117,18 +120,18 @@ $customer_id = $_SESSION['customer_id'];
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="confirmPurchase.php" method="get">
                                     <div class="my-4">
                                         <h4 class="my-3">Install Parts</h4>
                                         <label class="col mx-2 my-2">
-                                            <select name='installation_option' style='height:30px;width:170px;border:1px solid #fff;'>
+                                            <select name='inst_options' style='height:30px;width:170px;border:1px solid #fff;'>
                                                 <option selected="selected" disabled="disabled">Options</option>
                                                 <option value='on_your_own'>On Your Own</option>
                                                 <option value='at_workshop'>At Workshop</option>
                                             </select>
                                         </label>
                                         <label class="col mx-2 my-2">
-                                            <input class="form-control" name='address' type="date" placeholder="Choose a date"></input>
+                                            <input class="form-control" name='date' type="date" placeholder="Choose a date"></input>
                                         </label>
                                     </div>
                                     <div class="my-4">
@@ -180,12 +183,13 @@ $customer_id = $_SESSION['customer_id'];
 
                                         </div>
                                     </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type=" submit" class="btn btn-danger">Cancel</button>
+                                    </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><a href="confirmPurchase.php">Submit</a></button>
-                                <button type=" submit" class="btn btn-danger">Cancel</button>
-                            </div>
+
                         </div>
                     </div>
                 </div>
