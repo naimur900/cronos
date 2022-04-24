@@ -30,10 +30,10 @@
               <a class="nav-link active" aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="userSignin.php">Sign In</a>
+              <a class="nav-link" href="userSigninPage.php">Sign In</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="adminSignin.php">Admin Sign In</a>
+              <a class="nav-link" href="adminSigninPage.php">Admin Sign In</a>
             </li>
           </ul>
         </div>
@@ -46,7 +46,7 @@
       <div class="card p-5 border-sign-in">
     <h4 class="text-center text-secondary mb-5">Sign-up</h4>
 
-        <form action="signupdb.php" method="post">
+        <form action="dbUserSignup.php" method="post">
           <!-- input started -->
           <div class="mb-3">
             <label for="first_name" class="form-label">First Name</label>
@@ -95,7 +95,7 @@
           <small class="text-danger">Already Have an Account?</small>
           <div class="d-flex justify-content-center mt-2">
             <button class="btn btn-warning">
-              <a class="btn-anchor" href="userSignin.php">Sign In</a>
+              <a class="btn-anchor" href="userSigninPage.php">Sign In</a>
             </button>
           </div>
         </div>

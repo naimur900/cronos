@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION["admin_name"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 ?>
 <!DOCTYPE html>
@@ -38,11 +38,20 @@ if (!isset($_SESSION["admin_name"])) {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <!-- Starting, ending -->
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="addPartsPage.php">Admin Panel</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="btn btn-danger" class="nav-link" href="adminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="addCarPage.php">Add Car</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="addCarPage.php">Add Parts</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="adminFeedbackViewPage.php">FeedBacks</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-danger" class="nav-link" href="dbAdminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
                         </li>
                     </ul>
                 </div>
@@ -52,13 +61,13 @@ if (!isset($_SESSION["admin_name"])) {
     <!-- Main Tag-->
     <h6 class="text-center mt-4">Hello, <span class="text-secondary"><?= $_SESSION['admin_name']; ?></span></h6>
     <div class="text-center text-success mb-5"><small>Logged as Admin</small></div>
-    <main class="container">
+    <main class="container-fluid">
         <div class="text-center mb-4">
             <h2>Bookings</h2>
         </div>
+        <hr>
         <div>
-
-            <table class="table">
+            <table class="table mb-5">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">Order ID</th>
@@ -68,7 +77,10 @@ if (!isset($_SESSION["admin_name"])) {
                         <th scope="col">Car ID</th>
                         <th scope="col">Model</th>
                         <th scope="col">Brand</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Zip Code</th>
+                        <th scope="col">Shipping Address</th>
+                        <th scope="col">Days</th>
+                        <th scope="col">Total Price</th>
                         <th scope="col">Button</th>
                     </tr>
                 </thead>
@@ -77,9 +89,9 @@ if (!isset($_SESSION["admin_name"])) {
                     $searched_name = $_GET['searched_name'];
                     require_once("dbConnect.php");
                     $sql = "SELECT order_id, order_time, 
-          customer.customer_id, customer.first_name , customer.last_name, car.car_id, car.model, car.brand, car.price FROM booking 
-          INNER JOIN customer on customer.customer_id = booking.customer_id 
-          INNER JOIN car on car.car_id = booking.car_id WHERE (customer.first_name = '$searched_name' or customer.last_name = '$searched_name' or (CONCAT(customer.first_name,' ',customer.last_name)) = '$searched_name') ORDER BY order_id DESC";
+                    customer.customer_id, customer.first_name , customer.last_name, car.car_id, car.model, car.brand, zip_code, shipping_address, rent_days, car.price FROM booking 
+                    INNER JOIN customer on customer.customer_id = booking.customer_id 
+                    INNER JOIN car on car.car_id = booking.car_id WHERE (customer.first_name = '$searched_name' or customer.last_name = '$searched_name' or (CONCAT(customer.first_name,' ',customer.last_name)) = '$searched_name') ORDER BY order_id DESC";
 
 
 
@@ -98,9 +110,12 @@ if (!isset($_SESSION["admin_name"])) {
                                 <td><?php echo $row[6]; ?> </td>
                                 <td><?php echo $row[7]; ?> </td>
                                 <td><?php echo $row[8]; ?> </td>
+                                <td><?php echo $row[9]; ?> </td>
+                                <td><?php echo $row[10]; ?> </td>
+                                <td><?php echo $row[11]; ?> </td>
 
 
-                                <td><button class="btn btn-danger"><a href="deleteBookingFromAdminEnd.php?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[5]; ?>">Delete</a></button></button></td>
+                                <td><button class="btn btn-danger"><a href="dbRemoveBookingByAdmin.php?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[5]; ?>">Delete</a></button></button></td>
                             </tr>
                     <?php
                         }
@@ -109,8 +124,73 @@ if (!isset($_SESSION["admin_name"])) {
                 </tbody>
             </table>
 
+
+
+
+
+            <div class="text-center mb-4">
+                <h2>Purchases</h2>
+            </div>
+            <hr>
+            <table class="table mb-5">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Purchase ID</th>
+                        <th scope="col">Purchase Time</th>
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Parts ID</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Shipping Address</th>
+                        <th scope="col">Installation</th>
+                        <th scope="col">Installation Date</th>
+                        <th scope="col">Price</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <?php
+                    require_once("dbConnect.php");
+                    $sql = "SELECT purchase_id, purchase_time, purchase.customer_id,
+          customer.first_name, customer.last_name ,purchase.parts_id, parts.category, parts.model, parts.brand, shipping_address, inst_options, inst_date, parts.price FROM purchase
+          INNER JOIN customer on customer.customer_id = purchase.customer_id 
+          INNER JOIN parts on parts.parts_id = purchase.parts_id  WHERE (customer.first_name = '$searched_name' or customer.last_name = '$searched_name' or (CONCAT(customer.first_name,' ',customer.last_name)) = '$searched_name') ORDER BY purchase_id DESC;";
+
+                    $result = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                        //here we will print every row that is returned by our query $sql
+                        while ($row = mysqli_fetch_array($result)) {
+                            //here we have to write some HTML code, so we will close php tag
+                    ?>
+                            <tr>
+                                <td><?php echo $row[0]; ?></td>
+                                <td><?php echo $row[1]; ?></td>
+                                <td><?php echo $row[2]; ?></td>
+                                <td><?php echo $row[3]; ?> <?php echo $row[4]; ?></td>
+                                <td><?php echo $row[5]; ?></td>
+                                <td><?php echo $row[6]; ?></td>
+                                <td><?php echo $row[7]; ?></td>
+                                <td><?php echo $row[8]; ?></td>
+                                <td><?php echo $row[9]; ?></td>
+                                <td><?php echo $row[10]; ?></td>
+                                <td><?php echo $row[11]; ?></td>
+                                <td><?php echo $row[12]; ?></td>
+                            </tr>
+                    <?php
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+
+
+
+
+
             <!-- User Informations -->
-            <div class="text-center mt-5 mb-4">
+            <div class="text-center mb-4">
                 <h3>Users Information</h3>
 
             </div>
@@ -148,7 +228,7 @@ if (!isset($_SESSION["admin_name"])) {
                                 <td><?php echo $row[4] ?> </td>
                                 <td><?php echo $row[5] ?></td>
                                 <td><?php echo $row[6] ?> </td>
-                                <td><button class="btn btn-danger"><a href="deleteUserFromAdminEnd.php?userID=<?php echo $row[0]; ?>">Delete</a></button></td>
+                                <td><button class="btn btn-danger"><a href="dbRemoveUserByAdmin.php?userID=<?php echo $row[0]; ?>">Delete</a></button></td>
                             </tr>
                     <?php
                         }
@@ -211,7 +291,7 @@ if (!isset($_SESSION["admin_name"])) {
                                     <td><?php echo $row[12] ?> </td>
 
                                     <td class="carIcon"><a href="<?php echo $row[14] ?>" target="_blank"><img class="img-fluid" src="<?php echo $row[14] ?>" alt=""></a></td>
-                                    <td><button class="btn btn-danger"><a href="deleteCar.php?car_id=<?php echo $row[13]; ?>">Delete</a></button></button></td>
+                                    <td><button class="btn btn-danger"><a href="dbRemoveCarByAdmin.php?car_id=<?php echo $row[13]; ?>">Delete</a></button></button></td>
                                 </tr>
                         <?php
                             }
@@ -222,133 +302,6 @@ if (!isset($_SESSION["admin_name"])) {
                         <!-- eittuk -->
                     </tbody>
                 </table>
-
-                <!-- Add Cars -->
-                <div class="text-center carAdding mb-5">
-                    <h2>Add Car</h2>
-                </div>
-                <div class="m-auto mb-5 d-flex justify-content-center">
-                    <div class="card p-5 border-addCar">
-                        <form action="addCardb.php" method="post">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="cid" class="form-label">Car ID (must be unique)</label>
-                                        <input type="text" name='cid' class="form-control" id="cid" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="chassisNumber" class="form-label">Chassis Number (must be unique)</label>
-                                        <input type="text" name='cn' class="form-control" id="chassisNumber" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="model" class="form-label">Model</label>
-                                        <input type="text" name='md' class="form-control" id="model" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="brand" class="form-label">Brand</label>
-                                        <input type="text" name='br' class="form-control" id="brand" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="yearOfRelease" class="form-label">Year of Release</label>
-                                        <input type="date" name='yr' class="form-control" id="yearOfRelease" />
-                                        <!-- <textarea class="form-control" id="address" rows="2" name='address'></textarea> -->
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="price" class="form-label">Price (taka)</label>
-                                        <input type="text" name='pr' class="form-control" id="price" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="category" class="form-label">Category</label>
-                                        <input type="text" name='ct' class="form-control" id="category" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="mpg" class="form-label">MPG</label>
-                                        <input type="text" name='mpg' class="form-control" id="mpg" />
-                                    </div>
-                                    <!-- input finished -->
-
-                                </div>
-                                <div class="col-md-6">
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="tt" class="form-label">Transmission Type</label>
-                                        <input type="text" name='tt' class="form-control" id="transmissionType" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="fuelType" class="form-label">Fuel Type</label>
-                                        <input type="text" name='ft' class="form-control" id="fuelType" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="fuelCapacity" class="form-label">Fuel Capacity (litre)</label>
-                                        <input type="text" name='fc' class="form-control" id="fuelCapacity" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-
-                                    <div class="mb-3">
-                                        <label for="horsePower" class="form-label">Horse-Power</label>
-                                        <input type="text" name='hp' class="form-control" id="horsePower" />
-                                    </div>
-                                    <!-- input finished -->
-
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="torque" class="form-label">Torque (nm)</label>
-                                        <input type="text" name='tr' class="form-control" id="torque" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="seatCapacity" class="form-label">Seat Capacity</label>
-                                        <input type="text" name='sc' class="form-control" id="seatCapacity" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="bootSpace" class="form-label">Boot Space (litre)</label>
-                                        <input type="text" name='bs' class="form-control" id="bootSpace" />
-                                    </div>
-                                    <!-- input finished -->
-                                    <!-- input started -->
-                                    <div class="mb-3">
-                                        <label for="color" class="form-label">Color</label>
-                                        <input type="text" name='cl' class="form-control" id="color" />
-                                    </div>
-                                    <!-- input finished -->
-                                </div>
-                            </div>
-
-                            <!-- input started -->
-                            <div class="mb-3">
-                                <label for="thumbnail" class="form-label">Thumbnail Link <i class="fas fa-link"></i></label>
-                                <input type="text" name='th' class="form-control" id="thumbnail" />
-                            </div>
-                            <!-- input finished -->
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary w-50">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
     </main>
 

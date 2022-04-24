@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["email"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 ?>
 
@@ -46,13 +46,13 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" href="userPanel.php">Car Rental</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                            <a class="nav-link active" aria-current="page" href="customizationPage.php">Customization</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
+                            <a class="nav-link active" aria-current="page" href="wishListPage.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                         <!-- <li class="nav-item ms-2 mx-2">
                             <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
@@ -75,7 +75,7 @@ if (!isset($_SESSION["email"])) {
                     </h4>
                 </div>
 
-                <form action="userFeedbackdb.php" method="POST">
+                <form action="dbUserFeedback.php" method="POST">
                     <div class="mb-3">
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Title</label>

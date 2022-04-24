@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["email"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 ?>
 
@@ -44,10 +44,10 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                         <li class="nav-item ms-2">
-                            <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
+                            <a class="btn btn-dark" class="nav-link" href="userBookingHistory.php">My Bookings</a>
                         </li>
                     </ul>
                 </div>
@@ -100,14 +100,14 @@ if (!isset($_SESSION["email"])) {
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="addBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
+                                    <a href="dbAddBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
                                 </div>
                             </div>
                         </div>
                 <?php
                     }
                 } else {
-                    echo "<script>alert('No result found'); window.location.href='userpanel.php';</script>";
+                    echo "<script>alert('No result found'); window.location.href='userPanel.php';</script>";
                 }
                 ?>
             </div>

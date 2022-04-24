@@ -9,9 +9,9 @@ $query_add_to_wishlist = "INSERT INTO wishlist VALUES( default, default, '$custo
 $result = mysqli_query($conn, $query_add_to_wishlist);
 
 if ($result){
-    echo "<script>alert('Added to wishlist successfully'); window.location.href='customization.php';</script>";
+    echo "<script>alert('Added to wishlist successfully'); window.location.href='customizationPage.php';</script>";
 }
 else{
-    echo "<script>alert('Failed'); window.location.href='customization.php';</script>";
+    echo "<script>alert('Failed'); window.location.href='customizationPage.php';</script>";
 }
     

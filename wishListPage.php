@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["email"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 ?>
 
@@ -48,13 +48,13 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="userPanel.php">Car Rental</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                            <a class="nav-link active" aria-current="page" href="customizationPage.php">Customization</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                            <a class="nav-link active" aria-current="page" href="userFeedbackPage.php">Feedback</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                     </ul>
                 </div>
@@ -70,14 +70,14 @@ if (!isset($_SESSION["email"])) {
     $customer_id = $_SESSION['customer_id'];
     ?>
 
-    <main class="container my-5">
+    <main class="container-fluid my-5">
 
         <div class="mb-5">
             <div class="text-center mb-4">
                 <h2>Car you wished for</h2>
             </div>
             <table class="table">
-                <thead class="table-dark">
+                <thead class="table-dark ">
                     <tr>
                         <th scope="col">Wished on</th>
                         <th scope="col">Customer ID</th>
@@ -108,7 +108,7 @@ if (!isset($_SESSION["email"])) {
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?> </td>
                                 <td><?php echo $row[5] ?></td>
-                                <td><button class="btn btn-danger"><a href="removeCarFromWishList.php
+                                <td><button class="btn btn-danger"><a href="dbRemoveWishListCarByUser.php
                                 ?wish_id=<?php echo $row[6]; ?>">Remove</a></button></button></td>
                             </tr>
                     <?php
@@ -159,7 +159,7 @@ if (!isset($_SESSION["email"])) {
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?> </td>
                                 <td><?php echo $row[5] ?></td>
-                                <td><button class="btn btn-danger"><a href="removeCarFromWishList.php
+                                <td><button class="btn btn-danger"><a href="dbRemoveWishListCarByUser.php
                                 ?wish_id=<?php echo $row[6]; ?>">Remove</a></button></button></td>
                             </tr>
                     <?php

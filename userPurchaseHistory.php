@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["email"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 
 require_once('dbConnect.php'); // Using database connection file here
@@ -50,16 +50,16 @@ $customer_id = $_SESSION['customer_id'];
                             <a class="nav-link active" href="userPanel.php">Car Rental</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                            <a class="nav-link active" aria-current="page" href="customizationPage.php">Customization</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
+                            <a class="nav-link active" aria-current="page" href="wishListPage.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                            <a class="nav-link active" aria-current="page" href="userFeedbackPage.php">Feedback</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                     </ul>
                 </div>
@@ -69,7 +69,7 @@ $customer_id = $_SESSION['customer_id'];
 
 
 
-    <div class="container my-5">
+    <div class="container-fluid my-5">
         <div class="text-center">
             <h2>Purchased Items</h2>
         </div>
@@ -78,20 +78,20 @@ $customer_id = $_SESSION['customer_id'];
                 <tr>
                     <th scope="col">Purchase ID</th>
                     <th scope="col">Purchase Time</th>
-                    <th scope="col">Customer ID</th>
                     <th scope="col">Parts ID</th>
-                    <th scope="col">First Name</th>
                     <th scope="col">Category</th>
                     <th scope="col">Model</th>
                     <th scope="col">Brand</th>
+                    <th scope="col">Shipping Address</th>
+                    <th scope="col">Installation</th>
+                    <th scope="col">Installation Date</th>
                     <th scope="col">Price</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 require_once("dbConnect.php");
-                $sql = "SELECT purchase_id, purchase_time, purchase.customer_id, purchase.parts_id,
-                    customer.first_name ,parts.category, parts.model, parts.brand, parts.price FROM purchase
+                $sql = "SELECT purchase_id, purchase_time, purchase.parts_id,parts.category, parts.model, parts.brand, shipping_address, inst_options, inst_date, parts.price FROM purchase
                     INNER JOIN customer on customer.customer_id = purchase.customer_id 
                     INNER JOIN parts on parts.parts_id = purchase.parts_id WHERE purchase.customer_id='$customer_id' ORDER BY purchase_id DESC;";
 
@@ -111,8 +111,7 @@ $customer_id = $_SESSION['customer_id'];
                             <td><?php echo $row[6] ?> </td>
                             <td><?php echo $row[7] ?> </td>
                             <td><?php echo $row[8] ?> </td>
-                            <!-- <td><button class="btn btn-success"><a href="deletePuchaseFromUserEnd.php
-                                ?purchase_id=<?php echo $row[0]; ?> & parts_id=<?php echo $row[2]; ?>">Delete</a></button></button></td> -->
+                            <td><?php echo $row[9] ?> </td>
                         </tr>
                 <?php
                     }

@@ -43,19 +43,19 @@ $customer_id = $_SESSION['customer_id'];
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                            <a class="nav-link active" aria-current="page" href="customizationPage.php">Customization</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
+                            <a class="nav-link active" aria-current="page" href="wishListPage.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                            <a class="nav-link active" aria-current="page" href="userFeedbackPage.php">Feedback</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="btn btn-warning" class="nav-link" href="userPurchaseHistory.php">Purchases</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
 
                     </ul>
@@ -64,12 +64,12 @@ $customer_id = $_SESSION['customer_id'];
         </nav>
     </navbar>
 
-    <main class="container">
+    <main class="container-fluid my-5">
         <div class="text-center">
             <h2>Cart</h2>
         </div>
         <div>
-            <table class="table">
+            <table class="table my-4">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">Parts ID</th>
@@ -99,7 +99,7 @@ $customer_id = $_SESSION['customer_id'];
                                 <td><?php echo $row[3] ?></td>
                                 <td><?php echo $row[4] ?> </td>
 
-                                <td><button class="btn btn-success"><a href="removePartsFromCart.php
+                                <td><button class="btn btn-success"><a href="dbRemoveCartPartsByUser.php
                                 ?cart_id=<?php echo $row[5]; ?>">Remove</a></button></td>
                             </tr>
                     <?php
@@ -120,7 +120,7 @@ $customer_id = $_SESSION['customer_id'];
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="confirmPurchase.php" method="get">
+                                <form action="dbConfirmPurchaseByUser.php" method="get">
                                     <div class="my-4">
                                         <h4 class="my-3">Install Parts</h4>
                                         <label class="col mx-2 my-2">

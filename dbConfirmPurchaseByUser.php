@@ -42,18 +42,10 @@ if ($flag == 1) {
     $sql4 = "DELETE FROM partscart WHERE partscart.customer_id = '$customer_id'";
     $result4 = mysqli_query($conn, $sql4);
     if ($result4) {
-        echo "<script>alert('Purchase Successful'); window.location.href='customization.php';</script>";
+        echo "<script>alert('Purchase Successful'); window.location.href='customizationPage.php';</script>";
     }
 }
 
 
 ?>
 
-
-<!-- 
-
-    alert('Booking Successful');
-    window.location.href = 'userpanel.php';
-
-    alert('Booking Failed');
-    window.location.href = 'userpanel.php'; -->

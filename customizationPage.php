@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["email"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 ?>
 
@@ -46,19 +46,19 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="userPanel.php">Car Rental</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
+                            <a class="nav-link active" aria-current="page" href="wishListPage.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                            <a class="nav-link active" aria-current="page" href="userFeedbackPage.php">Feedback</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-primary" class="nav-link" href="cart.php">Cart</a>
+                            <a class="btn btn-primary" class="nav-link" href="cartPage.php">Cart</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="btn btn-warning" class="nav-link" href="userPurchaseHistory.php">Purchases</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
 
                     </ul>
@@ -109,10 +109,10 @@ if (!isset($_SESSION["email"])) {
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="addPartsToCart.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-primary">Add to cart</a>
+                                            <a href="dbAddPartsToCart.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-primary">Add to cart</a>
                                         </div>
                                         <div class="col-md-6">
-                                            <a href="addPartsToWishList.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
+                                            <a href="dbAddPartsToWishList.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
                                         </div>
                                     </div>
                                 </div>

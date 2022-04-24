@@ -3,8 +3,8 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
-if (isset($_SESSION["email"])) {
-  header("location: userPanel.php");
+if (isset($_SESSION["admin_name"])) {
+  header("location: adminPanel.php");
 }
 ?>
 
@@ -15,7 +15,7 @@ if (isset($_SESSION["email"])) {
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CRONOS | Sign In</title>
+  <title>Sign In</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="fontawesome-free-5.15.4-web/fontawesome-free-5.15.4-web/css/all.css" />
@@ -42,10 +42,10 @@ if (isset($_SESSION["email"])) {
               <a class="nav-link active" aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="userSignin.php">Sign In</a>
+              <a class="nav-link" href="userSigninPage.php">Sign In</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="adminSignin.php">Admin Sign In</a>
+              <a class="nav-link" href="adminSigninPage.php">Admin Sign In</a>
             </li>
           </ul>
         </div>
@@ -53,34 +53,25 @@ if (isset($_SESSION["email"])) {
     </nav>
   </navbar>
   <!-- Sign In -->
-
   <signin>
     <div class="container d-flex align-items-center justify-content-center">
       <div class="card p-5 border-sign-in">
         <div>
-          <h4 class="text-center text-secondary">Sign In</h4>
+          <h4 class="text-center text-secondary mb-4">Sign In</h4>
         </div>
-        <form action="signindb.php" method="post">
+        <form action="dbAdminSignin.php" method="post">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            <label for="name" class="form-label">Admin Name</label>
+            <input type="text" name="admin_name" class="form-control" id="name" aria-describedby="emailHelp" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" name="password" class="form-control" id="exampleInputPassword1" />
           </div>
-          <button type="submit" value="Sign In" class="btn btn-primary">Submit</button>
-        </form>
-
-        <!-- Register Button -->
-        <div class="text-center mt-5">
-          <small class="text-danger">Don't Have an Account?</small>
-          <div class="d-flex justify-content-center mt-2">
-            <button class="btn btn-warning">
-              <a class="btn-anchor" href="userSignup.php">Sign Up</a>
-            </button>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Submit</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </signin>

@@ -20,7 +20,7 @@ if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['ci
 	//check if this insertion is happening in the database
 	if(mysqli_affected_rows($conn)){
 	
-		header("Location: userSignin.php");
+		header("Location: userSigninPage.php");
 	}
 	else{
 		echo "Insertion Failed";

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["email"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 
 require_once('dbConnect.php'); // Using database connection file here
@@ -50,16 +50,16 @@ $customer_id = $_SESSION['customer_id'];
                             <a class="nav-link active" href="userPanel.php">Car Rental</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                            <a class="nav-link active" aria-current="page" href="customizationPage.php">Customization</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
+                            <a class="nav-link active" aria-current="page" href="wishListPage.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                            <a class="nav-link active" aria-current="page" href="userFeedbackPage.php">Feedback</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                     </ul>
                 </div>
@@ -79,19 +79,19 @@ $customer_id = $_SESSION['customer_id'];
                         <th scope="col">Order ID</th>
                         <th scope="col">Order Time</th>
                         <th scope="col">Car ID</th>
-                        <th scope="col">Customer ID</th>
-                        <th scope="col">First Name</th>
                         <th scope="col">Model</th>
                         <th scope="col">Brand</th>
+                        <th scope="col">Zip Code</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Days</th>
                         <th scope="col">Total Cost</th>
-                        <!-- <th scope="col">Delete Booking</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     require_once("dbConnect.php");
-                    $sql = "SELECT order_id, order_time, car.car_id, customer.customer_id, 
-                    customer.first_name ,car.model, car.brand, total_price FROM booking 
+                    $sql = "SELECT order_id, order_time, car.car_id, 
+                    car.model, car.brand, zip_code, shipping_address, rent_days, total_price FROM booking 
                     INNER JOIN customer on customer.customer_id = booking.customer_id 
                     INNER JOIN car on car.car_id = booking.car_id WHERE booking.customer_id='$customer_id' ORDER BY order_id DESC;";
 
@@ -110,8 +110,7 @@ $customer_id = $_SESSION['customer_id'];
                                 <td><?php echo $row[5] ?></td>
                                 <td><?php echo $row[6] ?> </td>
                                 <td><?php echo $row[7] ?> </td>
-                                <!-- <td><button class="btn btn-danger"><a href="deleteBookingFromUserEnd.php
-                                ?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[2]; ?>">Delete</a></button></button></td> -->
+                                <td><?php echo $row[8] ?> </td>
                             </tr>
                     <?php
                         }

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["email"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 ?>
 
@@ -43,23 +43,23 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                            <a class="nav-link active" aria-current="page" href="customizationPage.php">Customization</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
+                            <a class="nav-link active" aria-current="page" href="wishListPage.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                            <a class="nav-link active" aria-current="page" href="userFeedbackPage.php">Feedback</a>
                         </li>
 
                         <li class="nav-item mx-2">
-                            <a class="btn btn-dark" class="nav-link" href="userBooking.php">Bookings</a>
+                            <a class="btn btn-dark" class="nav-link" href="userBookingHistory.php">Bookings</a>
                         </li>
                         <!-- <li class="nav-item mx-2">
                             <a class="btn btn-warning" class="nav-link" href="userPurchaseHistory.php">Purchases</a>
                         </li> -->
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                     </ul>
                 </div>
@@ -76,7 +76,7 @@ if (!isset($_SESSION["email"])) {
 
 
         <form action="searchPage.php" class="form-inline md-form mr-auto mb-4">
-            <input class="form-control mr-sm-2" name='searched_name' type="text" onkeyup="search_item()" id="given-input" placeholder="Search by brand/model/color/category" aria-label="Search">
+            <input class="form-control mr-sm-2" name='searched_name' type="text" id="given-input" placeholder="Search by brand/model/color/category" aria-label="Search">
             <button class="btn btn-outline-warning mt-2  btn-rounded btn-sm my-0" type="submit">Search</button>
         </form>
         <hr class="mb-4">
@@ -125,10 +125,10 @@ if (!isset($_SESSION["email"])) {
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="confirmBookingPage.php?car_id=<?php echo $row['car_id']; ?>& price=<?php echo $row['price']; ?>" class="mt-3 btn btn-primary">Book Now</a>
+                                            <a href="userConfirmBookingPage.php?car_id=<?php echo $row['car_id']; ?>& price=<?php echo $row['price']; ?>" class="mt-3 btn btn-primary">Book Now</a>
                                         </div>
                                         <div class="col-md-6">
-                                            <a href="addCarsToWishList.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
+                                            <a href="dbAddCarToWishList.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
                                         </div>
                                     </div>
                                 </div>

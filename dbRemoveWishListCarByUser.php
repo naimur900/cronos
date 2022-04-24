@@ -5,7 +5,7 @@ $query_deleting_wish = "DELETE FROM wishlist WHERE wish_id = '$wish_id'";
 $result = mysqli_query($conn, $query_deleting_wish);
 if($result)
 {
-    echo "<script>alert('Wish Removed Successfully'); window.location.href='wishList.php';</script>";
+    echo "<script>alert('Wish Removed Successfully'); window.location.href='wishListPage.php';</script>";
 
 }
 else

@@ -5,7 +5,7 @@ $query = "DELETE FROM partscart WHERE cart_id = '$cart_id'";
 $result = mysqli_query($conn, $query);
 if($result)
 {
-    echo "<script>alert('Removed Successfully'); window.location.href='cart.php';</script>";
+    echo "<script>alert('Removed Successfully'); window.location.href='cartPage.php';</script>";
 
 }
 else

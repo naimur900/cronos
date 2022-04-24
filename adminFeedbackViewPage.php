@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["admin_name"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 ?>
 <!DOCTYPE html>
@@ -46,7 +46,7 @@ if (!isset($_SESSION["admin_name"])) {
                             <a class="nav-link active" aria-current="page" href="adminPanel.php">Admin Panel</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="adminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbAdminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
                         </li>
                     </ul>
                 </div>
@@ -91,15 +91,8 @@ if (!isset($_SESSION["admin_name"])) {
                                             <div class="col-md-12"><small><?php echo $row[5] ?><?php echo $row[6] ?> </small> <br>
                                                 <small><?php echo $row[1] ?></small><br>
                                             </div>
-                                            <!-- <div class="col-md-6"> <small>Horse Power: <?php echo $row[7] ?> </small><br>
-                            <small>Torque: <?php echo $row[8] ?> </small><br>
-                            <small>Seat Capacity: <?php echo $row[9] ?> </small><br>
-                            <small>Boot Space: <?php echo $row[10] ?> </small><br>
-                            <small>Color: <?php echo $row[11] ?> </small><br>
-                          </div> -->
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

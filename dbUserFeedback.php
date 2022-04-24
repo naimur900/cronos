@@ -17,10 +17,10 @@ if(isset($_POST['feedback_message'])){
 	//check if this insertion is happening in the database
 	if(mysqli_affected_rows($conn)){
         
-        echo "<script>alert('Submitted Successfully'); window.location.href='userpanel.php';</script>";
+        echo "<script>alert('Submitted Successfully'); window.location.href='userPanel.php';</script>";
 	}
 	else{
-		echo "<script>alert('Submission Failed'); window.location.href='userFeedback.php';</script>";
+		echo "<script>alert('Submission Failed'); window.location.href='userFeedbackPage.php';</script>";
 	}
 	
 }

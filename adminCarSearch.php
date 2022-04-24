@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["admin_name"])) {
-  header("location: userSignin.php");
+  header("location: userSigninPage.php");
 }
 ?>
 <!DOCTYPE html>
@@ -46,10 +46,13 @@ if (!isset($_SESSION["admin_name"])) {
               <a class="nav-link active" aria-current="page" href="addCarPage.php">Add Car</a>
             </li>
             <li class="nav-item mx-2">
-              <a class="nav-link active" aria-current="page" href="adminFeedback.php">FeedBacks</a>
+              <a class="nav-link active" aria-current="page" href="addPartsPage.php">Add Parts</a>
             </li>
             <li class="nav-item mx-2">
-              <a class="btn btn-danger" class="nav-link" href="adminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
+              <a class="nav-link active" aria-current="page" href="adminFeedbackViewPage.php">FeedBacks</a>
+            </li>
+            <li class="nav-item mx-2">
+              <a class="btn btn-danger" class="nav-link" href="dbAdminSignout.php">Sign Out, <?= $_SESSION['admin_name']; ?> </a>
             </li>
           </ul>
         </div>
@@ -59,12 +62,25 @@ if (!isset($_SESSION["admin_name"])) {
   <!-- Main Tag-->
   <h6 class="text-center mt-4">Hello, <span class="text-secondary"><?= $_SESSION['admin_name']; ?></span></h6>
   <div class="text-center text-success mb-5"><small>Logged as Admin</small></div>
-  <main class="container mb-5">
+
+
+
+
+  <main class="container-fluid">
+
     <div class="text-center mb-4">
       <h2>Bookings</h2>
     </div>
+    <!-- <form action="adminUserSearch.php" class="form-inline md-form mb-4 m-5">
+      <input class="form-control mr-sm-2" name='searched_name' type="text" placeholder="Search by customer name" aria-label="Search">
+      <button class="btn btn-outline-warning mt-2  btn-rounded btn-md my-0" type="submit">Search</button>
+    </form> -->
+
+    <hr>
+
     <div>
-      <table class="table">
+
+      <table class="table mb-5">
         <thead class="table-dark">
           <tr>
             <th scope="col">Order ID</th>
@@ -74,19 +90,81 @@ if (!isset($_SESSION["admin_name"])) {
             <th scope="col">Car ID</th>
             <th scope="col">Model</th>
             <th scope="col">Brand</th>
-            <th scope="col">Price</th>
+            <th scope="col">Zip Code</th>
+            <th scope="col">Shipping Address</th>
+            <th scope="col">Days</th>
+            <th scope="col">Total Price</th>
             <th scope="col">Button</th>
           </tr>
+
         </thead>
         <tbody>
           <?php
-          $searched_name = $_GET['searched_name'];
           require_once("dbConnect.php");
           $sql = "SELECT order_id, order_time, 
-          customer.customer_id, customer.first_name , customer.last_name, car.car_id, car.model, car.brand, car.price FROM booking 
+          customer.customer_id, customer.first_name , customer.last_name, car.car_id, car.model, car.brand, zip_code, shipping_address, rent_days, car.price FROM booking 
           INNER JOIN customer on customer.customer_id = booking.customer_id 
           INNER JOIN car on car.car_id = booking.car_id ORDER BY order_id DESC";
 
+          $result = mysqli_query($conn, $sql);
+          if (mysqli_num_rows($result) > 0) {
+            //here we will print every row that is returned by our query $sql
+            while ($row = mysqli_fetch_array($result)) {
+              //here we have to write some HTML code, so we will close php tag
+          ?>
+              <tr id="search-booking">
+                <td><?php echo $row[0]; ?></td>
+                <td><?php echo $row[1]; ?></td>
+                <td><?php echo $row[2]; ?> </td>
+                <td><?php echo $row[3]; ?> <?php echo $row[4]; ?></td>
+                <td><?php echo $row[5]; ?></td>
+                <td><?php echo $row[6]; ?> </td>
+                <td><?php echo $row[7]; ?> </td>
+                <td><?php echo $row[8]; ?> </td>
+                <td><?php echo $row[9]; ?> </td>
+                <td><?php echo $row[10]; ?> </td>
+                <td><?php echo $row[11]; ?> </td>
+
+
+                <td><button class="btn btn-danger"><a href="dbRemoveBookingByAdmin.php?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[5]; ?>">Delete</a></button></button></td>
+              </tr>
+          <?php
+            }
+          }
+          ?>
+        </tbody>
+      </table>
+
+
+      <div class="text-center mb-4">
+        <h2>Purchases</h2>
+      </div>
+      <hr>
+      <table class="table mb-5">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Purchase ID</th>
+            <th scope="col">Purchase Time</th>
+            <th scope="col">Customer ID</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Parts ID</th>
+            <th scope="col">Category</th>
+            <th scope="col">Model</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Shipping Address</th>
+            <th scope="col">Installation</th>
+            <th scope="col">Installation Date</th>
+            <th scope="col">Price</th>
+          </tr>
+
+        </thead>
+        <tbody>
+          <?php
+          require_once("dbConnect.php");
+          $sql = "SELECT purchase_id, purchase_time, purchase.customer_id,
+          customer.first_name, customer.last_name ,purchase.parts_id, parts.category, parts.model, parts.brand, shipping_address, inst_options, inst_date, parts.price FROM purchase
+          INNER JOIN customer on customer.customer_id = purchase.customer_id 
+          INNER JOIN parts on parts.parts_id = purchase.parts_id ORDER BY purchase_id DESC;";
 
           $result = mysqli_query($conn, $sql);
           if (mysqli_num_rows($result) > 0) {
@@ -97,15 +175,16 @@ if (!isset($_SESSION["admin_name"])) {
               <tr>
                 <td><?php echo $row[0]; ?></td>
                 <td><?php echo $row[1]; ?></td>
-                <td><?php echo $row[2]; ?> </td>
+                <td><?php echo $row[2]; ?></td>
                 <td><?php echo $row[3]; ?> <?php echo $row[4]; ?></td>
                 <td><?php echo $row[5]; ?></td>
-                <td><?php echo $row[6]; ?> </td>
-                <td><?php echo $row[7]; ?> </td>
-                <td><?php echo $row[8]; ?> </td>
-
-
-                <td><button class="btn btn-danger"><a href="deleteBookingFromAdminEnd.php?booking_id=<?php echo $row[0]; ?> & car_id=<?php echo $row[5]; ?>">Delete</a></button></button></td>
+                <td><?php echo $row[6]; ?></td>
+                <td><?php echo $row[7]; ?></td>
+                <td><?php echo $row[8]; ?></td>
+                <td><?php echo $row[9]; ?></td>
+                <td><?php echo $row[10]; ?></td>
+                <td><?php echo $row[11]; ?></td>
+                <td><?php echo $row[12]; ?></td>
               </tr>
           <?php
             }
@@ -115,11 +194,13 @@ if (!isset($_SESSION["admin_name"])) {
       </table>
 
       <!-- User Informations -->
-      <div class="text-center mt-5 mb-4">
-        <h3>Users Information</h3>
-
+      <div class="text-center mb-4">
+        <h2>Users Information</h2>
       </div>
-      <table class="table">
+
+      <hr>
+
+      <table class="table mb-5">
         <thead class="table-dark">
           <tr>
             <th scope="col">Customer ID</th>
@@ -135,8 +216,7 @@ if (!isset($_SESSION["admin_name"])) {
         <tbody>
           <?php
           require_once("dbConnect.php");
-          $sql = "SELECT * from customer ";
-
+          $sql = "SELECT * from customer";
 
 
           $result = mysqli_query($conn, $sql);
@@ -153,7 +233,7 @@ if (!isset($_SESSION["admin_name"])) {
                 <td><?php echo $row[4] ?> </td>
                 <td><?php echo $row[5] ?></td>
                 <td><?php echo $row[6] ?> </td>
-                <td><button class="btn btn-danger"><a href="deleteUserFromAdminEnd.php?userID=<?php echo $row[0]; ?>">Delete</a></button></td>
+                <td><button class="btn btn-danger"><a href="dbRemoveUserByAdmin.php?userID=<?php echo $row[0]; ?>">Delete</a></button></td>
               </tr>
           <?php
             }
@@ -162,7 +242,7 @@ if (!isset($_SESSION["admin_name"])) {
         </tbody>
       </table>
 
-      <div class="text-center mt-5 mb-4">
+      <div class="text-center mb-4">
         <h2>All Cars</h2>
       </div>
       <div>
@@ -189,6 +269,7 @@ if (!isset($_SESSION["admin_name"])) {
           <tbody>
             <?php
             require_once("dbConnect.php");
+            $searched_name = $_GET['searched_name'];
             $sql = "SELECT brand, model, specification.category,specification.mpg, specification.transmission_type, specification.fuel_type, specification.fuel_capacity, specification.horse_power, specification.torque, specification.seat_capacity, specification.boot_space, specification.color, car.car_status, specification.car_id, picture FROM car INNER JOIN specification on specification.car_id = car.car_id WHERE (car.model = '$searched_name' OR car.brand = '$searched_name' OR specification.color = '$searched_name' OR specification.category = '$searched_name' OR car.car_status = '$searched_name' OR (CONCAT(car.brand,' ',car.model)) = '$searched_name' OR (CONCAT(car.model,' ',car.brand)) = '$searched_name' ) ORDER BY car.car_id ASC";
 
             $result = mysqli_query($conn, $sql);
@@ -213,7 +294,7 @@ if (!isset($_SESSION["admin_name"])) {
                   <td><?php echo $row[12] ?> </td>
 
                   <td class="carIcon"><a href="<?php echo $row[14] ?>" target="_blank"><img class="img-fluid" src="<?php echo $row[14] ?>" alt=""></a></td>
-                  <td><button class="btn btn-danger"><a href="deleteCar.php?car_id=<?php echo $row[13]; ?>">Delete</a></button></button></td>
+                  <td><button class="btn btn-danger"><a href="dbRemoveCarByAdmin.php?car_id=<?php echo $row[13]; ?>">Delete</a></button></button></td>
                 </tr>
             <?php
               }

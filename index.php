@@ -42,7 +42,7 @@ session_start();
                   <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="userSignin.php"><?php
+                  <a class="nav-link" href="userSigninPage.php"><?php
                                                             if (isset($_SESSION["email"])) {
                                                               echo "User: ", $_SESSION["first_name"], " ", $_SESSION["last_name"];
                                                             } else {
@@ -50,7 +50,7 @@ session_start();
                                                             } ?></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="adminSignin.php"><?php
+                  <a class="nav-link" href="adminSigninPage.php"><?php
                                                               if (isset($_SESSION["admin_name"])) {
                                                                 echo "Admin: ", $_SESSION["admin_name"];
                                                               } else {
@@ -145,9 +145,8 @@ session_start();
                   <small>
                     <h4>Owners</h4>
                     <p><i>Naimur Rahman</i></p>
-                    <p><i>Ishmam Hossain</i></p>
-                    <p><i>Kazi Ashif Shahriar</i></p>
-                    <!-- <p><i>Aminul Islam</i></p> -->
+                    <p><i>Rakinul Haque</i></p>
+                    <p><i>Kazi Nazibul Islam</i></p>
                   </small>
                 </div>
                 <hr>

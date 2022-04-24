@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["email"])) {
-    header("location: userSignin.php");
+    header("location: userSigninPage.php");
 }
 ?>
 
@@ -43,22 +43,22 @@ if (!isset($_SESSION["email"])) {
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="customization.php">Customization</a>
+                            <a class="nav-link active" aria-current="page" href="customizationPage.php">customizationPage</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="wishList.php">Wish List</a>
+                            <a class="nav-link active" aria-current="page" href="wishListPage.php">Wish List</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="userFeedback.php">Feedback</a>
+                            <a class="nav-link active" aria-current="page" href="userFeedbackPage.php">Feedback</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link active" aria-current="page" href="cart.php">Cart</a>
+                            <a class="nav-link active" aria-current="page" href="cartPage.php">Cart</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="btn btn-danger" class="nav-link" href="userSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
+                            <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
                         <li class="nav-item ms-2 mx-2">
-                            <a class="btn btn-dark" class="nav-link" href="userBooking.php">My Bookings</a>
+                            <a class="btn btn-dark" class="nav-link" href="userBookingHistory.php">My Bookings</a>
                         </li>
                     </ul>
                 </div>
@@ -113,7 +113,7 @@ if (!isset($_SESSION["email"])) {
                             </div>
                         </div>
                         <div class="w-50 mb-5">
-                            <form action="addBooking.php" method="get">
+                            <form action="dbAddBooking.php" method="get">
                                 <div class="my-4">
                                     <h3 class="my-3">Pick Up detail</h3>
                                     <div class="row">
@@ -129,15 +129,12 @@ if (!isset($_SESSION["email"])) {
                                         <script>
                                             function getSelectValue() {
                                                 let x = document.getElementById("days").value;
-                                                // let d = x.options[x.selectedIndex].text;
                                                 console.log(x)
                                                 let y = document.getElementById("per-day-price").getElementsByTagName("h4")[0].innerText;
-                                                let res = eval(x * y)
                                                 console.log(y);
+                                                let res = eval(x * y)
                                                 console.log(res);
                                                 document.getElementById("total").innerText = res;
-                                      
-
                                             }
                                         </script>
 
