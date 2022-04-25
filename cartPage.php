@@ -120,6 +120,8 @@ $customer_id = $_SESSION['customer_id'];
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
+
+                            <!-- after submitting the form -->
                                 <form action="dbConfirmPurchaseByUser.php" method="get">
                                     <div class="my-4">
                                         <h4 class="my-3">Install Parts</h4>

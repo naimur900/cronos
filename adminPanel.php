@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["admin_name"])) {
-  header("location: userSigninPage.php");
+  header("location: adminSigninPage.php");
 }
 ?>
 <!DOCTYPE html>
@@ -71,6 +71,7 @@ if (!isset($_SESSION["admin_name"])) {
     <div class="text-center mb-4">
       <h2>Bookings</h2>
     </div>
+    
     <form action="adminUserSearch.php" class="form-inline md-form mb-4 m-5">
       <input class="form-control mr-sm-2" name='searched_name' type="text" placeholder="Search by customer name" aria-label="Search">
       <button class="btn btn-outline-warning mt-2  btn-rounded btn-md my-0" type="submit">Search</button>

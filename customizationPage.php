@@ -38,7 +38,7 @@ if (!isset($_SESSION["email"])) {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <!-- Starting, ending -->
+                     
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
@@ -74,8 +74,9 @@ if (!isset($_SESSION["email"])) {
             <h4>Available Parts</h4>
         </div>
 
+        <!-- Search -->
 
-        <form action="searchPage.php" class="form-inline md-form mr-auto mb-4">
+        <form action="userPartsSearchPage.php" class="form-inline md-form mr-auto mb-4">
             <input class="form-control mr-sm-2" name='searched_name' type="text" placeholder="Search by brand/model/color/category" aria-label="Search">
             <button class="btn btn-outline-warning mt-2  btn-rounded btn-sm my-0" type="submit">Search</button>
         </form>
@@ -108,9 +109,13 @@ if (!isset($_SESSION["email"])) {
                                         </div>
                                     </div>
                                     <div class="row">
+
+                                    <!-- Add to Cart -->
                                         <div class="col-md-6">
                                             <a href="dbAddPartsToCart.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-primary">Add to cart</a>
                                         </div>
+
+                                        <!-- Add to wish list -->
                                         <div class="col-md-6">
                                             <a href="dbAddPartsToWishList.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
                                         </div>

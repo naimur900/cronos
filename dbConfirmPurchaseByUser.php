@@ -7,6 +7,7 @@ $customer_id = $_SESSION['customer_id'];
 $inst_options = $_GET['inst_options'];
 $zipcode = $_GET['zipcode'];
 $address = $_GET['address'];
+$inst_date = $_GET['date'];
 
 
 require_once("dbConnect.php");
@@ -23,7 +24,7 @@ if (mysqli_num_rows($result) > 0) {
 
         <?php
 
-        $sql2 = "INSERT INTO purchase VALUES( default, default, '$customer_id', '$row[0]','$inst_options','$address','$zipcode','$row[1]')";
+        $sql2 = "INSERT INTO purchase VALUES( default, default, '$customer_id', '$row[0]','$inst_options','$inst_date','$address','$zipcode','$row[1]')";
         $sql3 = "UPDATE parts SET parts_status = 'purchased' WHERE parts_id = '$row[0]'";
 
 

@@ -20,7 +20,7 @@ if(isset($_POST['category']) && isset($_POST['brand']) && isset($_POST['model'])
 	$result = mysqli_query($conn, $query_inserting_parts);
 	
 	//check if this insertion is happening in the database
-	if($result1){
+	if($result){
 			echo "<script>alert('Parts Added Successfully'); window.location.href='addPartsPage.php';</script>";
 	}
 	else{

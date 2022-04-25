@@ -12,7 +12,7 @@ $query_inserting_record = "INSERT INTO partscart VALUES( default, '$customer_id'
 $result = mysqli_query($conn, $query_inserting_record);
 
 if ($result) {
-    echo "<script>alert('Added Successful'); window.location.href='customizationPage.php';</script>";
+    echo "<script>alert('Added Successfully'); window.location.href='customizationPage.php';</script>";
 
 } else {
     echo "<script>alert('Addition Failed'); window.location.href='customizationPage.php';</script>";

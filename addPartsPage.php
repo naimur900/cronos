@@ -64,7 +64,7 @@ if (!isset($_SESSION["admin_name"])) {
     </div>
     <div class="m-auto mb-5 d-flex justify-content-center">
         <div class="card p-5 border-addCar mb-5">
-            <form action="dbAddCarByAdmin.php" method="post">
+            <form action="dbAddPartsByAdmin.php" method="post">
                 <div class="row">
                     <div class="col-md-12">
                         <!-- input started -->

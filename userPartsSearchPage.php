@@ -6,8 +6,6 @@ if (!isset($_SESSION["email"])) {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +22,7 @@ if (!isset($_SESSION["email"])) {
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
+
 </head>
 
 <body>
@@ -39,16 +38,29 @@ if (!isset($_SESSION["email"])) {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <!-- Starting, ending -->
+
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="userPanel.php">Car Rental</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="wishListPage.php">Wish List</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="nav-link active" aria-current="page" href="userFeedbackPage.php">Feedback</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-primary" class="nav-link" href="cartPage.php">Cart</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-warning" class="nav-link" href="userPurchaseHistory.php">Purchases</a>
+                        </li>
+                        <li class="nav-item mx-2">
                             <a class="btn btn-danger" class="nav-link" href="dbUserSignout.php">Sign Out, <?= $_SESSION['last_name']; ?> </a>
                         </li>
-                        <li class="nav-item ms-2">
-                            <a class="btn btn-dark" class="nav-link" href="userBookingHistory.php">My Bookings</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -59,19 +71,19 @@ if (!isset($_SESSION["email"])) {
             <h6>Hello, <span class="text-secondary"> <?= $_SESSION['first_name']; ?> <?= $_SESSION['last_name']; ?></span> </h6>
         </div>
         <div class="mt-4 mb-4 text-center">
-            <h4>Available Cars</h4>
+            <h4>Available Parts</h4>
         </div>
 
 
+        <hr class="mb-4">
         <div>
             <div class="row container">
+
                 <?php
                 $searched_name = $_GET['searched_name'];
                 require_once("dbConnect.php");
-                $sql = "SELECT brand, model, specification.category,specification.mpg, specification.transmission_type, specification.fuel_type, specification.fuel_capacity, specification.horse_power, specification.torque, specification.seat_capacity, specification.boot_space, specification.color, specification.car_id, picture FROM car 
-                INNER JOIN specification on specification.car_id = car.car_id WHERE car.car_status = 'not-booked' AND (brand ='$searched_name' OR model='$searched_name' OR specification.color='$searched_name' OR specification.category='$searched_name' OR (CONCAT(car.brand,' ',car.model)) = '$searched_name' OR (CONCAT(car.model,' ',car.brand)) = '$searched_name' ) ORDER BY car.car_id DESC";
+                $sql = "SELECT category, brand, model, color, compitable_with, price, image, parts_id FROM parts WHERE parts_status='not-purchased' AND (brand ='$searched_name' OR model='$searched_name' OR color='$searched_name' OR category='$searched_name' OR (CONCAT(brand,' ',model)) = '$searched_name' OR (CONCAT(model,' ',brand)) = '$searched_name' ) ORDER BY parts_id DESC";
 
-                // Executing the query
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     //here we will print every row that is returned by our query $sql
@@ -81,33 +93,35 @@ if (!isset($_SESSION["email"])) {
 
                         <div class="col-md-4 mb-5">
                             <div class="card bookingCard" style="width: 22rem;">
-                                <img src="<?php echo $row[13] ?>" class="card-img-top" alt="...">
+                                <img src="<?php echo $row[6] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $row[0]; ?> <?php echo $row[1]; ?></h5>
+                                    <h5 class="card-title"><?php echo $row[1]; ?> <?php echo $row[2]; ?></h5>
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-6"><small>Category: <?php echo $row[2] ?> </small> <br>
-                                                <small>MPG: <?php echo $row[3] ?></small><br>
-                                                <small>Transmission Type: <?php echo $row[4] ?> </small><br>
-                                                <small>Fuel Type: <?php echo $row[5] ?></small><br>
-                                                <small>Fuel Capacity: <?php echo $row[6] ?> </small><br>
-                                            </div>
-                                            <div class="col-md-6"> <small>Horse Power: <?php echo $row[7] ?> </small><br>
-                                                <small>Torque: <?php echo $row[8] ?> </small><br>
-                                                <small>Seat Capacity: <?php echo $row[9] ?> </small><br>
-                                                <small>Boot Space: <?php echo $row[10] ?> </small><br>
-                                                <small>Color: <?php echo $row[11] ?> </small><br>
+                                            <div class="col-md-12"><small>Category: <?php echo $row[0] ?> </small> <br>
+                                                <small>Color: <?php echo $row[3] ?> </small><br>
+                                                <small>Compitable With: <?php echo $row[4] ?> </small><br>
+                                                <small>Price: <?php echo $row[5] ?> </small><br>
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="dbAddBooking.php?car_id=<?php echo $row['car_id']; ?>" class="mt-3 btn btn-primary">Book</a>
+                                    <div class="row">
+
+                                        <!-- Add to Cart -->
+                                        <div class="col-md-6">
+                                            <a href="dbAddPartsToCart.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-primary">Add to cart</a>
+                                        </div>
+
+                                        <!-- Add to wish list -->
+                                        <div class="col-md-6">
+                                            <a href="dbAddPartsToWishList.php?parts_id=<?php echo $row[7]; ?>" class="mt-3 btn btn-warning">Add to wishlist</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                 <?php
                     }
-                } else {
-                    echo "<script>alert('No result found'); window.location.href='userPanel.php';</script>";
                 }
                 ?>
             </div>
