@@ -3,7 +3,7 @@
 $server_name = "localhost";
 $user_name = "root";
 $password = "";
-$db_name = "showroom_database";
+$db_name = "carrental_customization_database";
 
 //creating connection
 
